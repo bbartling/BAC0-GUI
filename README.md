@@ -33,15 +33,15 @@ $ python flaskapp.py
 
 Flask App Runs on:
 
-http://127.0.0.1:5000/.
+http://127.0.0.1:5000/ or as localhost
 
 BAC0 runs on UDP port 47808.
 
-On startup BAC0 performs a BACnet "whois" where the screenshotv below shows 2 BACnet devices.
+On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
 
 *Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion.
 
-![Alt text](/images/startup.PNG)
+![Start Up](/images/startup.PNG)
 
 
 ## HTTP GET Requests
@@ -49,13 +49,13 @@ On startup BAC0 performs a BACnet "whois" where the screenshotv below shows 2 BA
 App Supports 3 GET requests to read, write, or release BACnet. Like ping pong the Flask app at the moment only supports one BACnet point at a time to as shown in the insomnia screenshots below the BACnet device information needs to be entered in the body of the GET request.
 
 /bacnet/read/single
-![read](./images/read.png)
+![read](/images/read.png)
 
 /bacnet/write/single
-![write](./images/write.png)
+![write](/images/write.png)
 
 /bacnet/release/single
-![release](./images/release.png)
+![release](/images/release.png)
 
 
 FUTURE development to include multiple BACnet point read, write, and releases stay tuned to the repo. Please submit git issues to improve app as well as bugs found during testing.

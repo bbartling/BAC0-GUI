@@ -41,7 +41,7 @@ On startup BAC0 performs a BACnet "whois" where the screenshotv below shows 2 BA
 
 *Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion.
 
-![Starting](./images/startup.png)
+![Alt text](./images/startup.png)
 
 
 ## HTTP GET Requests

@@ -4,7 +4,7 @@ import flask
 import logging
 
 
-logging.basicConfig(filename='flask_app_log.log', level=logging.WARNING)
+logging.basicConfig(filename='_log_flask.log', level=logging.WARNING)
 
 
 
@@ -51,9 +51,9 @@ def reader():
         logging.error("Error trying BACnet Read {}".format(error))
         info = str(error)
         response_obj = { 'status' : 'fail', 'info' : info }
-        return json.dumps(response_obj), 500
+        return jsonify(response_obj), 500
 
-    return json.dumps(response_obj)
+    return jsonify(response_obj)
 
 
 #WRITE
@@ -78,9 +78,9 @@ def writer():
         logging.error("Error trying BACnet Read {}".format(error))
         info = str(error)
         response_obj = { 'status' : 'fail', 'info' : info }
-        return json.dumps(response_obj), 500
+        return jsonify(response_obj), 500
 
-    return json.dumps(response_obj)
+    return jsonify(response_obj)
 
 
 #RELEASE
@@ -104,9 +104,9 @@ def releaser():
         logging.error("Error trying BACnet Read {}".format(error))
         info = str(error)
         response_obj = { 'status' : 'fail', 'info' : info }
-        return json.dumps(response_obj), 500
+        return jsonify(response_obj), 500
 
-    return json.dumps(response_obj)
+    return jsonify(response_obj)
 
 
 if __name__ == '__main__':

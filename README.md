@@ -52,13 +52,13 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 App Supports 3 GET requests to read, write, or release BACnet. Like ping pong the Flask app at the moment only supports one BACnet point at a time to as shown in the insomnia screenshots below the BACnet device information needs to be entered in the body of the GET request.
 
 /bacnet/read/single
-![read](/images/read.png)
+![read](/images/read.PNG)
 
 /bacnet/write/single
-![write](/images/write.png)
+![write](/images/write.PNG)
 
 /bacnet/release/single
-![release](/images/release.png)
+![release](/images/release.PNG)
 
 
 FUTURE development to include multiple BACnet point read, write, and releases stay tuned to the repo. Please submit git issues to improve app as well as bugs found during testing.

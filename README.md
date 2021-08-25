@@ -19,6 +19,10 @@ https://bac0.readthedocs.io/en/latest/
 
 See requirements.txt.
 
+## deployment for non localhost or localhost Flask App
+If you deploy this app on a different machine, like a rasp pi use flaskapp.py
+For localhost deployment on the same machine as node-red use flaskapp_localhost.py
+
 ## Installation & Usage
 
 ```bash
@@ -61,7 +65,8 @@ App Supports 3 GET requests to read, write, or release BACnet. Like a game of pi
 ![release](/images/release.PNG)
 
 
-FUTURE development to include multiple BACnet point read, write, and releases stay tuned to the repo. Please submit git issues to improve app as well as bugs found during testing.
+## FUTURE development 
+Include multiple BACnet point read, write, and releases stay tuned to the repo. Please submit git issues to improve app as well as bugs found during testing.
 
 
 ## Author

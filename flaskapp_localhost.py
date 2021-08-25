@@ -111,6 +111,6 @@ def releaser():
 
 if __name__ == '__main__':
     print("Starting main loop")
-    app.run(debug=True,port=5000,host="0.0.0.0",use_reloader=False)
+    app.run(debug=True,port=5000,host="127.0.0.1",use_reloader=False)
 
 

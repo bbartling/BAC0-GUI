@@ -40,7 +40,7 @@ $ python flaskapp.py
 
 Flask App Runs on:
 
-http://127.0.0.1:5000/ or as localhost
+http://127.0.0.1:5000/ or as localhost with `flaskapp_localhost.py`
 
 BAC0 runs on UDP port 47808.
 

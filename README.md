@@ -15,13 +15,13 @@ https://bac0.readthedocs.io/en/latest/
 - runtime.txt
 
 
-## Requirement
+## Requirements
 
 See requirements.txt.
 
-## deployment for non localhost or localhost Flask App
+## Deployment for non localhost or localhost Flask App
 If you deploy this app on a different machine, like a rasp pi use flaskapp.py
-For localhost deployment on the same machine as node-red use flaskapp_localhost.py
+And for localhost deployment on the same machine as node-red use flaskapp_localhost.py
 
 ## Installation & Usage
 

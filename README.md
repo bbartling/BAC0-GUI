@@ -42,7 +42,7 @@ $ pip install -r requirements.txt
 $ python flaskapp.py
 ```
 
-If you want to run the Flask App as localhost on the same machine as Node-Red use this when you run the Python file:
+If you want to run the Flask App as localhost ONLY use this below when you run the Python file, as localhost the rest API will not be accessible from other computers on the LAN only localhost:
 
 ```
 # start the app to run as localhost
@@ -88,6 +88,7 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 ## Issues and comments
 Please submit git issues to improve app as well as bugs found during testing.
 
+## Author
 
 [linkedin](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
 

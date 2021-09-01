@@ -37,8 +37,8 @@ $ cd flask-restul-bacnet
 $ pip install -r requirements.txt
 
 # start the app
-# by default runs on host port 0.0.0.0
-# to access restAPI from a different device
+# by default runs on host IP address of 0.0.0.0
+# to access the restAPI from a different device
 $ python flaskapp.py
 ```
 

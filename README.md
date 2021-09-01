@@ -32,13 +32,24 @@ $ unzip flask-restul-bacnet.zip
 
 # change the directory
 $ cd flask-restul-bacnet
+
 # install packages
 $ pip install -r requirements.txt
-# start the server
+
+# start the app
+# by default runs on host port 0.0.0.0
+# to access restAPI from a different device
 $ python flaskapp.py
 ```
 
-Flask App Runs on:
+If you want to run the Flask App as localhost on the same machine as Node-Red use this when you run the Python file:
+
+```
+# start the app to run as localhost
+# to access restAPI from same machine
+$ python flaskapp.py -ip localhost
+```
+
 
 http://127.0.0.1:5000/ or as localhost with `flaskapp_localhost.py`
 

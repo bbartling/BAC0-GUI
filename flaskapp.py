@@ -2,7 +2,7 @@ import BAC0,time,json
 from flask import Flask, request, jsonify
 import flask
 import logging
-
+import argparse
 
 logging.basicConfig(filename='_log_flask.log', level=logging.WARNING)
 
@@ -111,6 +111,19 @@ def releaser():
 
 if __name__ == '__main__':
     print("Starting main loop")
-    app.run(debug=True,port=5000,host="0.0.0.0",use_reloader=False)
+
+    my_parser = argparse.ArgumentParser(description='Run Flask App as localhost or seperate device')
+    my_parser.add_argument('-ip',
+                           '--host_address',
+                           required=False,
+                           type=str,
+                           default='0.0.0.0',
+                           help='Default is to run app on a seperate device. To run as localhost try: python3 flaskapp.py -ip localhost')
+    args = my_parser.parse_args()
+
+    host_address = args.host_address
+    print('Host IP Address Config for the Flask App Is ' + host_address)
+
+    app.run(debug=False,port=5000,host=host_address,use_reloader=False)
 
 

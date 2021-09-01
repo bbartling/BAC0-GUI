@@ -51,9 +51,7 @@ $ python flaskapp.py -ip localhost
 ```
 
 
-http://127.0.0.1:5000/ or as localhost with `flaskapp_localhost.py`
-
-BAC0 runs on UDP port 47808.
+The Flask App runs on port 5000, the BACnet features (BAC0) runs on UDP port 47808.
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
 

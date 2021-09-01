@@ -55,14 +55,13 @@ The Flask App runs on port 5000, the BACnet features (BAC0) runs on UDP port 478
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
 
-*Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion.
+*Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion. Like a game of ping pong the Flask app at the moment only supports one BACnet point at a time to as shown in the insomnia screenshots below the BACnet device information needs to be entered in the body of the GET request. One thing to note is Flask as well as the BACnet stacks running under the hood are all synchronous non-thread safe Python libraries.
 
 ![Start Up](/images/startup.PNG)
 
 
-## HTTP GET Requests
-
-App Supports 3 GET requests to read, write, or release BACnet. Like a game of ping pong the Flask app at the moment only supports one BACnet point at a time to as shown in the insomnia screenshots below the BACnet device information needs to be entered in the body of the GET request. One thing to note is Flask as well as the BACnet stacks running under the hood are all synchronous non-thread safe Python libraries.
+## HTTP GET Requests for singe BACnet point
+-json payload in body of GET request structure as shown in the screenshots below
 
 /bacnet/read/single
 ![read](/images/read.PNG)
@@ -74,11 +73,21 @@ App Supports 3 GET requests to read, write, or release BACnet. Like a game of pi
 ![release](/images/release.PNG)
 
 
-## FUTURE development 
-Include multiple BACnet point read, write, and releases stay tuned to the repo. Please submit git issues to improve app as well as bugs found during testing.
+## HTTP GET Requests for multiple BACnet point
+-json payload in body of GET request structure as shown in the screenshots below
 
+/bacnet/read/multiple
+![read](/images/read_mult.PNG)
 
-## Author
+/bacnet/write/multiple
+![write](/images/write_mult.PNG)
+
+/bacnet/release/multiple
+![release](/images/release_mult.PNG)
+
+## Issues and comments
+Please submit git issues to improve app as well as bugs found during testing.
+
 
 [linkedin](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
 

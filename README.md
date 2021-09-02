@@ -85,6 +85,11 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 /bacnet/release/multiple
 ![release](/images/release_mult.PNG)
 
+
+## Node Red Flows
+!node_red(/images/node_red_flows.PNG)
+
+
 ## Issues and comments
 Please submit git issues to improve app as well as bugs found during testing.
 

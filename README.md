@@ -86,7 +86,7 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 ![release](/images/release_mult.PNG)
 
 
-## Node Red Flows
+## See Node Red Flows Folder for examples
 ![node_red](/images/node_red_flows.PNG)
 
 

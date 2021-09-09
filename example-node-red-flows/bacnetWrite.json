@@ -1,0 +1,342 @@
+[
+    {
+        "id": "2bc02f46.a8e46",
+        "type": "tab",
+        "label": "bacnetWriteFlow",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "94ca88116b9dc49b",
+        "type": "http request",
+        "z": "2bc02f46.a8e46",
+        "name": "http GET motor command",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "body",
+        "url": "192.168.0.100:5000/bacnet/write/single",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1290,
+        "y": 320,
+        "wires": [
+            [
+                "f543d22c7af54ae1",
+                "3533783d737e9437",
+                "397ad6be435ca79d"
+            ]
+        ]
+    },
+    {
+        "id": "f543d22c7af54ae1",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload.info",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1650,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3533783d737e9437",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "397ad6be435ca79d",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload.status",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1660,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "4f131647bccdc2d5",
+        "type": "function",
+        "z": "2bc02f46.a8e46",
+        "name": "add json header",
+        "func": "msg.headers={\"content-type\": \"application/json\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 320,
+        "wires": [
+            [
+                "ac705a490508bf0b",
+                "d00665e5b5023fa6",
+                "c958644bfa915fe7"
+            ]
+        ]
+    },
+    {
+        "id": "28275b45218ce373",
+        "type": "file",
+        "z": "2bc02f46.a8e46",
+        "name": "WriteFile",
+        "filename": "/home/ben/Desktop/testnr.txt",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 700,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e4aeef8c91a3eada",
+        "type": "inject",
+        "z": "2bc02f46.a8e46",
+        "name": "FireAfterReboot",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "string"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 300,
+        "wires": [
+            [
+                "ed95bb3e8d46e0fe"
+            ]
+        ]
+    },
+    {
+        "id": "ed95bb3e8d46e0fe",
+        "type": "file in",
+        "z": "2bc02f46.a8e46",
+        "name": "ReadFile",
+        "filename": "/home/ben/Desktop/testnr.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 300,
+        "wires": [
+            [
+                "b5e36240fa576ad8"
+            ]
+        ]
+    },
+    {
+        "id": "b5e36240fa576ad8",
+        "type": "ui_time_scheduler",
+        "z": "2bc02f46.a8e46",
+        "group": "bfe48a3e.1b0f4",
+        "name": "",
+        "startDay": "0",
+        "refresh": 60,
+        "devices": [
+            "Device 1"
+        ],
+        "singleOff": false,
+        "onlySendChange": false,
+        "customPayload": false,
+        "eventMode": false,
+        "eventOptions": [],
+        "sendTopic": false,
+        "lat": "",
+        "lon": "",
+        "customContextStore": "",
+        "outputs": 2,
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "28275b45218ce373"
+            ],
+            [
+                "4f131647bccdc2d5"
+            ]
+        ]
+    },
+    {
+        "id": "ac705a490508bf0b",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d00665e5b5023fa6",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "headers",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1040,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c958644bfa915fe7",
+        "type": "function",
+        "z": "2bc02f46.a8e46",
+        "name": "ON or OFF",
+        "func": "var payload = msg.payload\n\nif (payload==true){\n    \n    // JSON PAYLOAD FOR MOTOR ON\n    \n    msg.payload = {\n    \"address\": \"12345:2\",\n    \"object_type\": \"analogValue\",\n    \"object_instance\": \"302\",\n    \"value\": \"99\",\n    \"priority\": \"11\"\n    }\n}\n\nif (payload==false){\n\n    // JSON PAYLOAD FOR MOTOR OFF\n    \n    msg.payload = {\n    \"address\": \"12345:2\",\n    \"object_type\": \"analogValue\",\n    \"object_instance\": \"302\",\n    \"value\": \"55\",\n    \"priority\": \"11\"\n    }\n\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 320,
+        "wires": [
+            [
+                "7aca11aae7abec09",
+                "c6eb6105215c9964",
+                "94ca88116b9dc49b",
+                "c4aaf81d5529aba5"
+            ]
+        ]
+    },
+    {
+        "id": "7aca11aae7abec09",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload.priority",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c6eb6105215c9964",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload.value",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c4aaf81d5529aba5",
+        "type": "debug",
+        "z": "2bc02f46.a8e46",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload.value",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 1380,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "ec9bd04e60daf3b0",
+        "type": "comment",
+        "z": "2bc02f46.a8e46",
+        "name": "ON OFF function changes json payload",
+        "info": "",
+        "x": 970,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "bfe48a3e.1b0f4",
+        "type": "ui_group",
+        "name": "Scheduler",
+        "tab": "2936b813.6cde68",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "2936b813.6cde68",
+        "type": "ui_tab",
+        "name": "Furnace Temp",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

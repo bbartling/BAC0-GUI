@@ -54,7 +54,7 @@ The Flask App runs on port 5000, the BACnet features (BAC0) runs on UDP port 478
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
 
-*Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion. Like a game of ping pong the Flask app at the moment only supports one BACnet point at a time to as shown in the insomnia screenshots below the BACnet device information needs to be entered in the body of the GET request. One thing to note is Flask as well as the BACnet stacks running under the hood are all synchronous non-thread safe Python libraries.
+*Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion. Like a game of ping pong the Flask app only supports one argument(URL endpoint) at a time to as shown in the insomnia screenshots. The BACnet device information to be retreived or written needs to be entered in the body of the HTTP GET request as JSON payload. One thing to note is Flask as well as the BACnet stacks running under the hood are all synchronous non-thread safe Python libraries.
 
 ![Start Up](/images/startup.PNG)
 

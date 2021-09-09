@@ -85,7 +85,7 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 ![release](/images/release_mult.PNG)
 
 ## Node Red Example Flows
-[Examples](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
+[Link for example flows](https://github.com/bbartling/flask-restul-bacnet/tree/main/example-node-red-flows)
 ![node_red](/images/node_red_flows.PNG)
 
 

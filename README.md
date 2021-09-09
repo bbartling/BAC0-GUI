@@ -20,8 +20,7 @@ https://bac0.readthedocs.io/en/latest/
 See requirements.txt.
 
 ## Deployment for non localhost or localhost Flask App
-If you deploy this app on a different machine, like a rasp pi use flaskapp.py
-And for localhost deployment on the same machine as node-red use flaskapp_localhost.py
+See optional argument below for a `localhost` deployment
 
 ## Installation & Usage
 
@@ -85,8 +84,8 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 /bacnet/release/multiple
 ![release](/images/release_mult.PNG)
 
-
-## See Node Red Flows Folder for examples
+## Node Red Example Flows
+[Examples](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
 ![node_red](/images/node_red_flows.PNG)
 
 

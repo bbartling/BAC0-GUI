@@ -1,0 +1,100 @@
+import BAC0, time
+import glob, os
+import time, datetime
+import logging
+
+
+logging.basicConfig(filename='logs_whoIsBACO.log',level=logging.INFO,format= '%(asctime)s - %(levelname)s: %(message)s',\
+                     datefmt = '%m/%d/%Y %I:%M:%S %p' )
+bacnet = BAC0.lite()
+
+
+# delete db from previous run if a fresh one is needed
+delete_db = glob.glob('./*.db')
+for d in delete_db:
+    os.remove(d)
+
+# delete log files from previous run for fresh ones
+delete_logs = glob.glob('./ReadObjectList.log')
+for l in delete_logs:
+    os.remove(l)
+
+print("old bacpypes log removed")
+logging.info("old bacpypes log removed")
+print("old db removed")
+logging.info("old db removed")
+
+
+# scan network
+time.sleep(1)
+devices = bacnet.whois(global_broadcast=True)
+device_mapping = {}
+for device in devices:
+    if isinstance(device, tuple):
+        device_mapping[device[1]] = device[0]
+        print("Detected device %s with address %s" % (str(device[1]), str(device[0])))
+        
+print(device_mapping)
+logging.info(device_mapping)
+
+device_count = f"{str(len(device_mapping))} devices discovered on network"
+print(device_count)
+logging.info(device_count)
+
+# shut down BAC0 so we can use bacpypes
+bacnet.disconnect()
+print("BAC0 disconnected")
+logging.info("BAC0 disconnected")
+time.sleep(5)
+
+
+add_port_device_mapping = {}
+for device_id,address in device_mapping.items():
+    if address.count('.') == 3:
+        add_port_device_mapping[device_id] = f'{address}:47808'
+    else:
+        add_port_device_mapping[device_id] = address
+        
+print(add_port_device_mapping)
+logging.info(add_port_device_mapping)
+
+lets_go = f"Lets GO!, {time.ctime()}"
+print(lets_go)
+logging.info(lets_go)
+
+start_calc = datetime.datetime.now()
+
+try:
+    # py -3.9 ReadObjectList.py 1002 10.200.200.32:47808
+    # in Windows terminal to run the .py file
+    for device_id,address in add_port_device_mapping.items():
+    
+        going_to_try = f'GOING TO TRY: {device_id} {address}'
+        print(going_to_try)
+        logging.info(going_to_try)
+        
+        os.system(f'py -3.9 ReadObjectList.py {device_id} {address}')
+        
+        success = f'OS ran {device_id} {address}'
+        print(success)
+        logging.info(success)
+        
+        time.sleep(60)
+
+except KeyboardInterrupt:
+    pass
+
+finally:
+    done_deal = f"Done deal..., {time.ctime()}"
+    print(done_deal)
+    logging.info(done_deal)
+
+    end_calc = datetime.datetime.now()
+    diff = (end_calc - start_calc)   
+    diff_seconds = int(diff.total_seconds())
+    minute_seconds, seconds = divmod(diff_seconds, 60)
+    hours, minutes = divmod(minute_seconds, 60)
+    
+    hms = f"{hours}h {minutes}m {seconds}s"
+    print(hms)
+    logging.info(hms)

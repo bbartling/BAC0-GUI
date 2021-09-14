@@ -27,8 +27,7 @@ from bacpypes.app import BIPSimpleApplication
 from bacpypes.local.device import LocalDeviceObject
 
 
-logging.basicConfig(filename='logs_ReadObjectList.log', level=logging.ERROR,filemode='a',format= '%(asctime)s - %(levelname)s: %(message)s',\
-                     datefmt = '%m/%d/%Y %I:%M:%S %p' )
+
 
 # some debugging
 _debug = 0
@@ -75,6 +74,10 @@ class ObjectListContext:
             df = pd.DataFrame({'object_names': self.object_names,'object_type': object_type,'object_id': object_id})
             df['device_id'] = pd.Series([self.device_id[1] for x in range(len(df.index))])
             print(df)
+
+
+            df.to_csv('all_bacnet_bas.csv')
+            print("Data saved to csv!")
             
 
             engine = create_engine('sqlite:///all_bacnet_bas.db', echo=True)
@@ -293,6 +296,9 @@ def main():
 
     # kick off the process after the core is up and running
     deferred(this_application.read_object_list, device_id, device_addr)
+
+    logging.basicConfig(filename=f'./bacpypes_logs/logs_{device_id[1]}.log', level=logging.ERROR,filemode='a',format= '%(asctime)s - %(levelname)s: %(message)s',\
+                         datefmt = '%m/%d/%Y %I:%M:%S %p' )
 
     _log.debug("running")
 

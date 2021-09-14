@@ -14,21 +14,8 @@ logging.basicConfig(filename='_log_flask.log', level=logging.WARNING)
 bacnet = BAC0.lite()
 
 
-#scan network
-time.sleep(1)
-devices = bacnet.whois(global_broadcast=True)
-device_mapping = {}
-for device in devices:
-    if isinstance(device, tuple):
-        device_mapping[device[1]] = device[0]
-        logging.warning("Detected device %s with address %s" % (str(device[1]), str(device[0])))
-print(device_mapping)
-print((str(len(device_mapping)) + " devices discovered on network."))
-
-
 #start flask app
 app = Flask(__name__)
-
 
 
 #READ

@@ -2,6 +2,8 @@ import BAC0, time
 import glob, os
 import time, datetime
 import logging
+import pandas as pd
+from sqlalchemy import create_engine
 
 
 logging.basicConfig(filename='logs_whoIsBACO.log',level=logging.INFO,format= '%(asctime)s - %(levelname)s: %(message)s',\
@@ -14,8 +16,14 @@ delete_db = glob.glob('./*.db')
 for d in delete_db:
     os.remove(d)
 
+# delete db from previous run if a fresh one is needed
+delete_csv = glob.glob('./*.csv')
+for c in delete_csv:
+    os.remove(c)
+
+
 # delete log files from previous run for fresh ones
-delete_logs = glob.glob('./ReadObjectList.log')
+delete_logs = glob.glob('./bacpypes_logs/*.log')
 for l in delete_logs:
     os.remove(l)
 
@@ -46,6 +54,18 @@ bacnet.disconnect()
 print("BAC0 disconnected")
 logging.info("BAC0 disconnected")
 time.sleep(5)
+
+df = pd.DataFrame(devices,columns=["address", "bacnetId"])
+print(df)
+
+df.to_csv('network_scan.csv')
+
+engine = create_engine('sqlite:///all_bacnet_bas.db', echo=True)
+sqlite_connection = engine.connect()
+sqlite_table = "bacnet_whois"
+df.to_sql(sqlite_table, sqlite_connection, if_exists='replace')
+sqlite_connection.close()
+print("Data saved to sql!")
 
 
 add_port_device_mapping = {}
@@ -79,7 +99,7 @@ try:
         print(success)
         logging.info(success)
         
-        time.sleep(60)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     pass

@@ -297,7 +297,7 @@ def main():
     # kick off the process after the core is up and running
     deferred(this_application.read_object_list, device_id, device_addr)
 
-    logging.basicConfig(filename=f'./bacpypes_logs/logs_{device_id[1]}.log', level=logging.ERROR,filemode='a',format= '%(asctime)s - %(levelname)s: %(message)s',\
+    logging.basicConfig(filename=f'./bacpypes_logs/logs_device_{device_id[1]}.log', level=logging.DEBUG,filemode='a',format= '%(asctime)s - %(levelname)s: %(message)s',\
                          datefmt = '%m/%d/%Y %I:%M:%S %p' )
 
     _log.debug("running")

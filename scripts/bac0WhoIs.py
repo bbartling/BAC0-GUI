@@ -6,11 +6,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 
-logging.basicConfig(filename='logs_whoIsBACO.log',level=logging.INFO,format= '%(asctime)s - %(levelname)s: %(message)s',\
-                     datefmt = '%m/%d/%Y %I:%M:%S %p' )
-bacnet = BAC0.lite()
-
-
 # delete db from previous run if a fresh one is needed
 delete_db = glob.glob('./*.db')
 for d in delete_db:
@@ -26,6 +21,19 @@ for c in delete_csv:
 delete_logs = glob.glob('./bacpypes_logs/*.log')
 for l in delete_logs:
     os.remove(l)
+
+
+# delete log files from previous run for fresh ones
+delete_BAC0_logs = glob.glob('./logs_whoIsBACO.log')
+for b in delete_BAC0_logs:
+    os.remove(b)
+
+
+
+
+logging.basicConfig(filename='logs_whoIsBACO.log',level=logging.INFO,format= '%(asctime)s - %(levelname)s: %(message)s',\
+                     datefmt = '%m/%d/%Y %I:%M:%S %p' )
+bacnet = BAC0.lite()
 
 print("old bacpypes log removed")
 logging.info("old bacpypes log removed")

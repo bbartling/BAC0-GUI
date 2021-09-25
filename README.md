@@ -90,7 +90,16 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 
 
 ## Issues and comments
-Please submit git issues to improve app as well as bugs found during testing.
+Please submit git issues to improve app as well as bugs found during testing. 
+
+
+## Inspiration
+The idea for this tool is from the VOLTTRON platform developed by PNNL on the BACnet features with RPC to grab data from a BACnet building automation system. 
+[volttron github](https://github.com/VOLTTRON/volttron)
+
+Nube-IO is also a Node-Red IoT platform that also takes advantages of Python BACnet stacks, see there git repo as well for similar tools that can also incorporate MQTT protocol like the `rubix` apps.
+[nube-io github](https://github.com/NubeIO)
+
 
 ## Author
 

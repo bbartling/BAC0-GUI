@@ -1,11 +1,12 @@
 import BAC0,time,json 
-from aiohttp import web
+from aiohttp.web import Application, json_response, middleware
 import asyncio
 from pathlib import Path
 from typing import Any, AsyncIterator, Awaitable, Callable, Dict
 from aiohttp_pydantic import PydanticView
 from pydantic import BaseModel
-
+from aiohttp import web
+from aiohttp_pydantic import oas
 
 
 # define BAC0 app
@@ -25,8 +26,16 @@ print(device_mapping)
 print((str(len(device_mapping)) + " devices discovered on network."))
 
 
-# define web app
-app = web.Application()
+@middleware
+async def _not_found_to_404(request, handler):
+    try:
+        return await handler(request)
+    except Model.NotFound as key:
+        return json_response({"error": f"Pet {key} does not exist"}, status=404)
+
+
+app = Application(middlewares=[_not_found_to_404])
+oas.setup(app, version_spec="1.0.1", title_spec="BACnet Rest API App")
 
 
 async def bacnet_ops(action,address,object_type,object_instance, **kwargs):

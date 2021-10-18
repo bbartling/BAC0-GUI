@@ -6,7 +6,7 @@ from aiohttp_pydantic import PydanticView
 from aiohttp import web
 from aiohttp_pydantic import oas
 from models import ReadSingleModel,WriteSingleModel,ReleaseSingleModel
-from models import ReadMultModel
+from models import ReadMultModel,WriteMultModel,ReleaseMultModel
 from random import randrange
 
 
@@ -27,19 +27,18 @@ print(device_mapping)
 print((str(len(device_mapping)) + " devices discovered on network."))
 
 
-'''
+
 @middleware
 async def _not_found_to_404(request, handler):
     try:
         return await handler(request)
-    #except Model.NotFound as key:
-        #return json_response({"error": f"{key} does not exist"}, status=404)
-    except:
-        return json_response({"error": f"key does not exist"}, status=404)
+    except Exception as error:
+        return json_response({"key_error": f"{error}"}, status=404)
+
 
 
 app = Application(middlewares=[_not_found_to_404])
-'''
+
 
 app = Application()
 oas.setup(app, version_spec="1.0.1", title_spec="BACnet Rest API App")
@@ -81,10 +80,6 @@ async def bacnet_ops(action,address,object_type,object_instance, **kwargs):
         return "server error on BACnet opts"
 
 
-
-
-
-
 # Create your PydanticView and add annotations.
 class ReadSingleView(PydanticView):
     async def get(self, bacnet_req: ReadSingleModel):
@@ -94,7 +89,7 @@ class ReadSingleView(PydanticView):
         bacnet_req.object_type,
         bacnet_req.object_instance
         )
-        response_obj = {"status":"success", "present_value" : read_result}
+        response_obj = {"status":"read_success", "present_value" : read_result}
         return web.json_response(response_obj)
 
 
@@ -108,7 +103,7 @@ class WriteSingleView(PydanticView):
         value = bacnet_req.value,
         priority = bacnet_req.priority
         )
-        response_obj = {"status":"success", "info": write_result}
+        response_obj = {"status":"write_success", "info": write_result}
         return web.json_response(response_obj)
         
         
@@ -121,7 +116,7 @@ class ReleaseSingleView(PydanticView):
         bacnet_req.object_instance,
         priority = bacnet_req.priority
         )
-        response_obj = {"status":"success", "info": release_result}
+        response_obj = {"status":"release_success", "info": release_result}
         return web.json_response(response_obj)
 
 
@@ -130,6 +125,7 @@ class ReadMultView(PydanticView):
     async def get(self, bacnet_req: ReadMultModel):
         device_mapping = {}
         data_as_dict = bacnet_req.dict()
+        print("ReadMultView ",data_as_dict)
         
         for info,devices in data_as_dict.items():
             for device,attributes in devices.items():
@@ -149,7 +145,7 @@ class ReadMultView(PydanticView):
                 except:
                     device_mapping[device] = {'pv' : 'error'}
 
-        response_obj = {"status":"success", "data": device_mapping }    
+        response_obj = {"status":"read_success", "data": device_mapping }    
         return web.json_response(response_obj)
 
 
@@ -157,6 +153,7 @@ class WriteMultView(PydanticView):
     async def get(self, bacnet_req: WriteMultModel):
         device_mapping = {}
         data_as_dict = bacnet_req.dict()
+        print("WriteMultView ",data_as_dict)
         
         for info,devices in data_as_dict.items():
             for device,attributes in devices.items():
@@ -166,20 +163,19 @@ class WriteMultView(PydanticView):
                 try:
                     write_result = await bacnet_ops(
                     "write",
-                    bacnet_req.address,
-                    bacnet_req.object_type,
-                    bacnet_req.object_instance,
-                    value = bacnet_req.value,
-                    priority = bacnet_req.priority
+                    attributes["address"],
+                    attributes["object_type"],
+                    attributes["object_instance"],
+                    value = attributes["value"],
+                    priority = attributes["priority"]
                     )
                     
-                    device_mapping[device] = {'pv':write_result}
-                    device_mapping[device] = {bacnet_req.object_type + ' ' + bacnet_req.object_instance : value }
+                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : write_result }
                     
                 except:
-                    device_mapping[device] = {bacnet_req.object_type + ' ' + bacnet_req.object_instance : 'error' }
+                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : 'error' }
 
-        response_obj = {"status":"success", "data": device_mapping }    
+        response_obj = {"status":"write_success", "data": device_mapping }    
         return web.json_response(response_obj)
         
         
@@ -188,6 +184,7 @@ class ReleaseMultView(PydanticView):
     async def get(self, bacnet_req: ReleaseMultModel):
         device_mapping = {}
         data_as_dict = bacnet_req.dict()
+        print("ReleaseMultView ",data_as_dict)
         
         for info,devices in data_as_dict.items():
             for device,attributes in devices.items():
@@ -197,18 +194,18 @@ class ReleaseMultView(PydanticView):
                 try:
                     release_result = await bacnet_ops(
                     "release",
-                    bacnet_req.address,
-                    bacnet_req.object_type,
-                    bacnet_req.object_instance,
-                    priority = bacnet_req.priority
+                    attributes["address"],
+                    attributes["object_type"],
+                    attributes["object_instance"],
+                    priority = attributes["priority"]
                     )
                     
-                    device_mapping[device] = {object_type + ' ' + object_instance : 'error'}
-
+                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : release_result }
+                    
                 except:
-                    device_mapping[device] = {bacnet_req.object_type + ' ' + bacnet_req.object_instance : 'error'}
+                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : 'error' }
 
-        response_obj = {"status":"success", "data": device_mapping }    
+        response_obj = {"status":"release_success", "data": device_mapping }    
         return web.json_response(response_obj)
 
 

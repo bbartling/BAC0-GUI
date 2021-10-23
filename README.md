@@ -47,17 +47,17 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 
 
 # [Swagger](https://swagger.io/resources/open-api/) for OpenAPI rest endpoints:
-After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up this page that looks like this:
+After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
 
-[Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0:
-This is also built into the page for the swagger documentation:
+[Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0 which is also built into the swagger documentation mentioned above:
 ![Swagger2](/images/swagger2.PNG)
 
 
-# Example requests to the restapi app:
+# Example `GET` requests to the restapi app:
 
-BACnet Read Single:
+BACnet Write Single:
+`192.168.0.105:5000/bacnet/read/single`
 
 ```
 {
@@ -68,6 +68,7 @@ BACnet Read Single:
 ```
 
 BACnet Write Multiple:
+`192.168.0.105:5000/bacnet/read/multiple`
 
 ```
 {"devices":{

@@ -54,7 +54,7 @@ After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.
 ![Swagger2](/images/swagger2.PNG)
 
 
-# Example `GET` requests to the restapi app:
+# Example `GET` requests to the restapi app with JSON in body:
 
 BACnet Write Single:
 `192.168.0.105:5000/bacnet/read/single`
@@ -100,7 +100,7 @@ BACnet Write Multiple:
 }}
 ```
 
-This will return:
+returned JSON:
 
 ```
 {
@@ -127,6 +127,11 @@ This will return:
 
 App also supports BACnet writes and releases, see BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
 https://bac0.readthedocs.io/en/latest/
+
+# Note about Rasp pi Buster:
+Use the [flask_version](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version) if running python 3.7 or default rasp pi Buster image. This has been tested on a rasp pi Buster image with upgrading Python to 3.9 using this tutorial:
+https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
+
 
 ## Node Red Example Flows
 [Link for example flows](https://github.com/bbartling/flask-restul-bacnet/tree/main/example-node-red-flows)

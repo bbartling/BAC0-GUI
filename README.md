@@ -1,6 +1,6 @@
 # bacnet-restapi
 
-This is a RESTful interface to retrieve data from BACnet building automation systems. 
+This is a RESTful interface to retrieve data from BACnet building automation systems with typical industry standard BACnet read, writes, and release commands. 
 
 
 ## Overview
@@ -16,8 +16,6 @@ This is a RESTful interface to retrieve data from BACnet building automation sys
 
 See requirements.txt.
 
-## Deployment for non localhost or localhost Flask App
-See optional argument below for a `localhost` deployment
 
 ## Installation & Usage
 

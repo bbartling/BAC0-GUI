@@ -40,7 +40,7 @@ $ pip3 install -r requirements.txt
 $ python3 aioapp.py
 ```
 
-On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
+On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device `192.168.0.190` is an IP based BACnet device and device `201201` (BACnet instance ID) on MSTP network `12345` with hardware address `2` shown. This App supports both MSTP devices and IP based BACnet controllers.
 ![Start Up](/images/startup.PNG)
 
 

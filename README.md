@@ -1,6 +1,6 @@
 # bacnet-restapi
 
-This is a RESTful interface to retrieve data from BACnet building automation systems with typical industry standard BACnet read, writes, and release commands. 
+This is a RESTful interface to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
 
 
 ## Overview

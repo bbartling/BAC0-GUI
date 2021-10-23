@@ -54,7 +54,7 @@ After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.
 
 # Example `GET` requests to the restapi app with JSON in body:
 
-BACnet Write Single:
+BACnet Read Single:
 `192.168.0.105:5000/bacnet/read/single`
 
 ```
@@ -65,35 +65,35 @@ BACnet Write Single:
 }
 ```
 
-BACnet Write Multiple:
-`192.168.0.105:5000/bacnet/read/multiple`
+BACnet Read Multiple:
+`192.168.0.105:5000/bacnet/read/multiple` where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
 
 ```
 {"devices":{
-    "boiler":{
+    "boiler_return_temp":{
     "address":"12345:2",
     "object_type":"analogInput",
     "object_instance":"2"
     },
-    "cooling_plant":{
-    "address":"12345:2",
-    "object_type":"analogInput",
-    "object_instance":"2"
+    "cooling_plant_leaving_temp":{
+    "address":"12345:3",
+    "object_type":"multistateValue",
+    "object_instance":"225"
     },
-    "air_handler_1":{
-    "address":"12345:2",
-    "object_type":"analogInput",
-    "object_instance":"2"
+    "air_handler_1_fan_status":{
+    "address":"12345:4",
+    "object_type":"binaryInput",
+    "object_instance":"12"
     },
-    "air_handler_2":{
-    "address":"12345:2",
-    "object_type":"analogInput",
-    "object_instance":"2"
+    "air_handler_2_fan_command":{
+    "address":"12345:5",
+    "object_type":"binaryOutput",
+    "object_instance":"1"
     },
-    "hot_water_valve_1":{
+    "heater_water_valve_cmd":{
     "address":"12345:2",
-    "object_type":"analogInput",
-    "object_instance":"2"
+    "object_type":"analogOutput",
+    "object_instance":"7"
     }
 }}
 ```
@@ -104,19 +104,19 @@ returned JSON:
 {
   "status": "read_success",
   "data": {
-    "boiler": {
+    "boiler_return_temp": {
       "pv": 67.31
     },
-    "cooling_plant": {
+    "cooling_plant_leaving_temp": {
       "pv": 67.31
     },
-    "air_handler_1": {
+    "air_handler_1_fan_status": {
       "pv": 67.31
     },
-    "air_handler_2": {
+    "air_handler_2_fan_command": {
       "pv": 67.31
     },
-    "hot_water_valve_1": {
+    "heater_water_valve_cmd": {
       "pv": 67.31
     }
   }

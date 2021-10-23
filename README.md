@@ -105,19 +105,19 @@ returned JSON:
   "status": "read_success",
   "data": {
     "boiler_return_temp": {
-      "pv": 67.31
+      "pv": 167.01
     },
     "cooling_plant_leaving_temp": {
-      "pv": 67.31
+      "pv": 44.31
     },
     "air_handler_1_fan_status": {
       "pv": 67.31
     },
     "air_handler_2_fan_command": {
-      "pv": 67.31
+      "pv": True
     },
     "heater_water_valve_cmd": {
-      "pv": 67.31
+      "pv": 87.39
     }
   }
 }

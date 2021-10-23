@@ -137,7 +137,7 @@ https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
 
 
 ## Auto Scan BACnet network
-[scanning_scripts](https://github.com/bbartling/bacnet-restapi/tree/main/scanning_scripts) for an experimental process of auto scanning the BACnet to compile results into a CSV file.
+See the [scanning_scripts](https://github.com/bbartling/bacnet-restapi/tree/main/scanning_scripts) directory of this repo for an experimental process of auto scanning the BACnet to compile results into a CSV file.
 
 
 ## Issues and comments

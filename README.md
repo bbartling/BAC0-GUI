@@ -2,9 +2,6 @@
 
 This is a RESTful interface to retrieve data from BACnet building automation systems. 
 
-See BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
-https://bac0.readthedocs.io/en/latest/
-
 
 ## Overview
 
@@ -46,15 +43,18 @@ $ python3 aioapp.py
 ```
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
-
-*Please advise on large BACnet sites this portion of the code could be commented out to prevent unwanted BACnet traffice or network congestion. Like a game of ping pong the Flask app only supports one argument(URL endpoint) at a time to as shown in the insomnia screenshots. The BACnet device information to be retreived or written needs to be entered in the body of the HTTP GET request as JSON payload. One thing to note is Flask as well as the BACnet stacks running under the hood are all synchronous non-thread safe Python libraries.
-
 ![Start Up](/images/startup.PNG)
 
 
-# Swagger for open API:
-Go to [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas)
+# Swagger for OpenAPI:
+After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas)
+![Swagger1](/images/Swagger1.PNG)
 
+# Pydantic Models for BACnet requests with BAC0:
+![Swagger3](/images/Swagger2.PNG)
+
+See BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
+https://bac0.readthedocs.io/en/latest/
 
 ## Node Red Example Flows
 [Link for example flows](https://github.com/bbartling/flask-restul-bacnet/tree/main/example-node-red-flows)

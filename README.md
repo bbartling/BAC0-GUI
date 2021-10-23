@@ -47,13 +47,84 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 
 
 # [Swagger](https://swagger.io/resources/open-api/) for OpenAPI rest endpoints:
-After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up this page:
+After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up this page that looks like this:
 ![Swagger1](/images/swagger1.PNG)
 
-# [Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0:
-![Swagger3](/images/swagger2.PNG)
+[Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0:
+This is also built into the page for the swagger documentation:
+![Swagger2](/images/swagger2.PNG)
 
-See BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
+
+# Example requests to the restapi app:
+
+BACnet Read Single:
+
+```
+{
+	"address":"12345:2",
+	"object_type":"analogInput",
+	"object_instance":"2"
+}
+```
+
+BACnet Write Multiple:
+
+```
+{"devices":{
+    "boiler":{
+    "address":"12345:2",
+    "object_type":"analogInput",
+    "object_instance":"2"
+    },
+    "cooling_plant":{
+    "address":"12345:2",
+    "object_type":"analogInput",
+    "object_instance":"2"
+    },
+    "air_handler_1":{
+    "address":"12345:2",
+    "object_type":"analogInput",
+    "object_instance":"2"
+    },
+    "air_handler_2":{
+    "address":"12345:2",
+    "object_type":"analogInput",
+    "object_instance":"2"
+    },
+    "hot_water_valve_1":{
+    "address":"12345:2",
+    "object_type":"analogInput",
+    "object_instance":"2"
+    }
+}}
+```
+
+This will return:
+
+```
+{
+  "status": "read_success",
+  "data": {
+    "boiler": {
+      "pv": 67.31
+    },
+    "cooling_plant": {
+      "pv": 67.31
+    },
+    "air_handler_1": {
+      "pv": 67.31
+    },
+    "air_handler_2": {
+      "pv": 67.31
+    },
+    "hot_water_valve_1": {
+      "pv": 67.31
+    }
+  }
+}
+```
+
+App also supports BACnet writes and releases, see BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
 https://bac0.readthedocs.io/en/latest/
 
 ## Node Red Example Flows

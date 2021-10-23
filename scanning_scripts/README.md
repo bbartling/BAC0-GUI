@@ -13,4 +13,4 @@ Tested on python 3.9, run `$ python3 bac0WhoIs.py`
 
 
 
-See output files of `network_scan.csv` and `all_bacnet_bas.csv` for the desired output.
+See the examples in this repo of the output files of `network_scan.csv` and `all_bacnet_bas.csv` for the desired output. The idea is to understand the BACnet network and devices faster that using the BAS or a 3rd party scanning tool.

@@ -111,7 +111,7 @@ returned JSON:
       "pv": 44.31
     },
     "air_handler_1_fan_status": {
-      "pv": 67.31
+      "pv": False
     },
     "air_handler_2_fan_command": {
       "pv": True

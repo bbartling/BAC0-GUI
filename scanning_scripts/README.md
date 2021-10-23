@@ -9,4 +9,8 @@ This is an experimental process to auto scan the LAN in the building for ALL BAC
 `pip install sqlalchemy`
 
 
-Tested on python 3.9, run `bac0WhoIs.py`
+Tested on python 3.9, run `$ python3 bac0WhoIs.py`
+
+
+
+See output files of `network_scan.csv` and `all_bacnet_bas.csv` for the desired output.

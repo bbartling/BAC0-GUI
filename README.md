@@ -47,11 +47,11 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 
 
 # [Swagger](https://swagger.io/resources/open-api/) for OpenAPI rest endpoints:
-After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas)
-![Swagger1](/images/Swagger1.PNG)
+After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up this page:
+![Swagger1](/images/swagger1.PNG)
 
 # [Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0:
-![Swagger3](/images/Swagger2.PNG)
+![Swagger3](/images/swagger2.PNG)
 
 See BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
 https://bac0.readthedocs.io/en/latest/

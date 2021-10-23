@@ -32,11 +32,17 @@ $ unzip bacnet-restapi.zip
 # change the directory
 $ cd bacnet-restapi
 
+# create virtual enviornment
+$ python3 -m venv env
+
+# activate virtual enviornment
+$ source env/bin/activate
+
 # install packages
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 
 # start the restapi web app
-$ python aioapp.py
+$ python3 aioapp.py
 ```
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
@@ -46,6 +52,8 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 ![Start Up](/images/startup.PNG)
 
 
+# Swagger for open API:
+Go to [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas)
 
 
 ## Node Red Example Flows

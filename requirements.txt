@@ -1,3 +1,2 @@
-BAC0==21.2.25
-Flask==1.1.2
-requests==2.25.0
+aiohttp
+aiohttp-pydantic

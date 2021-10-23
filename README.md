@@ -1,8 +1,8 @@
 # bacnet-restapi
 
-This is a RESTful interface to retrieve data from BACnet building automation systems. The idea is to run this Flask web app on the same LAN as the building automation system along side NODE-RED as localhost to take advantage of Python BACnet stacks. The Flask App accepts JSON payloads and hands off the BACnet features to BAC0 (runs on a UDP port 47808) which is a Python BACnet App developed by Christian Tremblay.
+This is a RESTful interface to retrieve data from BACnet building automation systems. 
 
-See BAC0 documention for what is going under the hood of the Flask App:
+See BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
 https://bac0.readthedocs.io/en/latest/
 
 
@@ -25,32 +25,19 @@ See optional argument below for a `localhost` deployment
 ## Installation & Usage
 
 ```bash
-$ git clone https://github.com/bbartling/flask-restul-bacnet.git
+$ git clone https://github.com/bbartling/bacnet-restapi.git
 # Or using downloaded zip file 
-$ unzip flask-restul-bacnet.zip
+$ unzip bacnet-restapi.zip
 
 # change the directory
-$ cd flask-restul-bacnet
+$ cd bacnet-restapi
 
 # install packages
 $ pip install -r requirements.txt
 
-# start the app
-# by default runs on host IP address of 0.0.0.0
-# to access the restAPI from a different device
-$ python flaskapp.py
+# start the restapi web app
+$ python aioapp.py
 ```
-
-If you want to run the Flask App as localhost ONLY use this below when you run the Python file, as localhost the rest API will not be accessible from other computers on the LAN only localhost:
-
-```
-# start the app to run as localhost
-# to access restAPI from same machine
-$ python flaskapp.py -ip localhost
-```
-
-
-The Flask App runs on port 5000, the BACnet features (BAC0) runs on UDP port 47808.
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device 192.168.0.190 is an IP based BACnet device and device 201201 (BACnet instance ID) on MSTP network 12345 with hardware address 2 shown. This App supports both MSTP devices and IP based BACnet controllers.
 
@@ -59,30 +46,7 @@ On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BAC
 ![Start Up](/images/startup.PNG)
 
 
-## HTTP GET Requests for singe BACnet point
--json payload in body of GET request structure as shown in the screenshots below
 
-/bacnet/read/single
-![read](/images/read.PNG)
-
-/bacnet/write/single
-![write](/images/write.PNG)
-
-/bacnet/release/single
-![release](/images/release.PNG)
-
-
-## HTTP GET Requests for multiple BACnet point
--json payload in body of GET request structure as shown in the screenshots below
-
-/bacnet/read/multiple
-![read](/images/read_mult.PNG)
-
-/bacnet/write/multiple
-![write](/images/write_mult.PNG)
-
-/bacnet/release/multiple
-![release](/images/release_mult.PNG)
 
 ## Node Red Example Flows
 [Link for example flows](https://github.com/bbartling/flask-restul-bacnet/tree/main/example-node-red-flows)

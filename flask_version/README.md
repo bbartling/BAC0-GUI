@@ -1,5 +1,7 @@
 # bacnet-restapi
 
+The `flask_version` is for running on Python 3.7 (on a rasp pi Buster image) or later. 
+
 This is a RESTful interface to retrieve data from BACnet building automation systems. The idea is to run this Flask web app on the same LAN as the building automation system along side NODE-RED as localhost to take advantage of Python BACnet stacks. The Flask App accepts JSON payloads and hands off the BACnet features to BAC0 (runs on a UDP port 47808) which is a Python BACnet App developed by Christian Tremblay.
 
 See BAC0 documention for what is going under the hood of the Flask App:

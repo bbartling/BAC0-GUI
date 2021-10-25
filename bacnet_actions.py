@@ -31,8 +31,11 @@ class BACnetActions(PydanticView):
                 read_vals = f'{address} {object_type} {object_instance} presentValue'
                 print("Excecuting BACnet read statement:", read_vals)
                 read_result = bacnet.read(read_vals)
-                read_result_round = round(read_result,2)
-                return read_result_round
+                if isinstance(read_result, str):
+                    pass
+                else:
+                    read_result = round(read_result,2)
+                return read_result
             except Exception as error:
                 return "error"
       

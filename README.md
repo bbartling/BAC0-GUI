@@ -52,7 +52,7 @@ After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.
 ![Swagger2](/images/swagger2.PNG)
 
 
-# Example `GET` requests to the restapi app with JSON in body:
+# Example `GET` HTTP requests to the restapi app with JSON in body:
 
 BACnet Read Single:
 `192.168.0.105:5000/bacnet/read/single`
@@ -98,7 +98,7 @@ BACnet Read Multiple:
 }}
 ```
 
-returned JSON:
+returned JSON of sensor readings BACnet present values:
 
 ```
 {

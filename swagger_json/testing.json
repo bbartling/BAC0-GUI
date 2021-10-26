@@ -1,0 +1,289 @@
+{
+    "components": {
+        "schemas": {
+            "ReadSingleModel": {
+                "properties": {
+                    "address": {
+                        "title": "Address",
+                        "type": "string"
+                    },
+                    "object_instance": {
+                        "title": "Object Instance",
+                        "type": "string"
+                    },
+                    "object_type": {
+                        "title": "Object Type",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "address",
+                    "object_type",
+                    "object_instance"
+                ],
+                "title": "ReadSingleModel",
+                "type": "object"
+            },
+            "ReleaseSingleModel": {
+                "properties": {
+                    "address": {
+                        "title": "Address",
+                        "type": "string"
+                    },
+                    "object_instance": {
+                        "title": "Object Instance",
+                        "type": "string"
+                    },
+                    "object_type": {
+                        "title": "Object Type",
+                        "type": "string"
+                    },
+                    "priority": {
+                        "title": "Priority",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "address",
+                    "object_type",
+                    "object_instance",
+                    "priority"
+                ],
+                "title": "ReleaseSingleModel",
+                "type": "object"
+            },
+            "WriteSingleModel": {
+                "properties": {
+                    "address": {
+                        "title": "Address",
+                        "type": "string"
+                    },
+                    "object_instance": {
+                        "title": "Object Instance",
+                        "type": "string"
+                    },
+                    "object_type": {
+                        "title": "Object Type",
+                        "type": "string"
+                    },
+                    "priority": {
+                        "title": "Priority",
+                        "type": "string"
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "address",
+                    "object_type",
+                    "object_instance",
+                    "value",
+                    "priority"
+                ],
+                "title": "WriteSingleModel",
+                "type": "object"
+            }
+        }
+    },
+    "info": {
+        "title": "Aiohttp pydantic application",
+        "version": "1.0.0"
+    },
+    "openapi": "3.0.0",
+    "paths": {
+        "/bacnet/read/multiple": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "devices": {
+                                        "additionalProperties": {
+                                            "$ref": "#/components/schemas/ReadSingleModel"
+                                        },
+                                        "title": "Devices",
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "devices"
+                                ],
+                                "title": "ReadMultModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bacnet/read/single": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "address": {
+                                        "title": "Address",
+                                        "type": "string"
+                                    },
+                                    "object_instance": {
+                                        "title": "Object Instance",
+                                        "type": "string"
+                                    },
+                                    "object_type": {
+                                        "title": "Object Type",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "object_type",
+                                    "object_instance"
+                                ],
+                                "title": "ReadSingleModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bacnet/release/multiple": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "devices": {
+                                        "additionalProperties": {
+                                            "$ref": "#/components/schemas/ReleaseSingleModel"
+                                        },
+                                        "title": "Devices",
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "devices"
+                                ],
+                                "title": "ReleaseMultModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bacnet/release/single": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "address": {
+                                        "title": "Address",
+                                        "type": "string"
+                                    },
+                                    "object_instance": {
+                                        "title": "Object Instance",
+                                        "type": "string"
+                                    },
+                                    "object_type": {
+                                        "title": "Object Type",
+                                        "type": "string"
+                                    },
+                                    "priority": {
+                                        "title": "Priority",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "object_type",
+                                    "object_instance",
+                                    "priority"
+                                ],
+                                "title": "ReleaseSingleModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bacnet/write/multiple": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "devices": {
+                                        "additionalProperties": {
+                                            "$ref": "#/components/schemas/WriteSingleModel"
+                                        },
+                                        "title": "Devices",
+                                        "type": "object"
+                                    }
+                                },
+                                "required": [
+                                    "devices"
+                                ],
+                                "title": "WriteMultModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/bacnet/write/single": {
+            "get": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "address": {
+                                        "title": "Address",
+                                        "type": "string"
+                                    },
+                                    "object_instance": {
+                                        "title": "Object Instance",
+                                        "type": "string"
+                                    },
+                                    "object_type": {
+                                        "title": "Object Type",
+                                        "type": "string"
+                                    },
+                                    "priority": {
+                                        "title": "Priority",
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "title": "Value",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "address",
+                                    "object_type",
+                                    "object_instance",
+                                    "value",
+                                    "priority"
+                                ],
+                                "title": "WriteSingleModel",
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

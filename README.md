@@ -25,23 +25,35 @@ The demo will utilize [Node Red Generator](https://github.com/node-red/node-red-
 
 
 ```bash tmux session 1
-# Run Node Red
 
-# install node red generator with npm
+
+# Install node red generator with npm
 $ npm install -g node-red-nodegen
 
-# git clone the python web app repo
+# Git clone the python web app repo
 $ git clone https://github.com/bbartling/bacnet-restapi.git
 
-# change the directory
+# Change the directory
 $ cd bacnet-restapi/swagger_json
 
-# auto generate requests with node red gen
+# Auto generate requests with node red gen
 $ sudo node-red-nodegen testing.json
 
-# you could also use the git URL for this tool
-# node-red-nodegen https://github.com/bbartling/bacnet-restapi/blob/main/swagger_json/testing.json
+# In the bacnet-restapi/swagger_json directory
+# Change directory to the generated node's directory
+$ node-red-contrib-aiohttp-pydantic-application
 
+# Prepare the symbolic link
+$ sudo npm link
+
+# change directory
+$ cd ~/.node-red
+
+# Change current directory to Node-RED home directory (Typically, Node-RED home directory is ".node-red" under the home directory)
+$ npm link node-red-contrib-aiohttp-pydantic-application
+
+# Start Node-RED
+$ node-red
 ```
 
 

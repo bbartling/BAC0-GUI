@@ -17,7 +17,7 @@ class ReadSingleView(PydanticView):
         bacnet_req.object_type,
         bacnet_req.object_instance
         )
-        response_obj = {"status":"read_success", "present_value" : read_result}
+        response_obj = {"status":"read_success", "pv" : read_result}
         return web.json_response(response_obj)
 
 

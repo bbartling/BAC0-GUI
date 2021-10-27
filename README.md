@@ -19,12 +19,13 @@ See requirements.txt.
 
 ## Installation & Usage With Node Red
 
-Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. This app can also run on a seperate device like a rasp pi.
+Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
 
 The demo will utilize [Node Red Generator](https://github.com/node-red/node-red-nodegen/wiki)
 
 
-```bash tmux session 1
+```
+# tmux window pane 1
 
 
 # Install node red generator with npm
@@ -57,41 +58,68 @@ $ node-red
 ```
 
 
-```bash tmux session 2
+# Start Python Web App
+```
+# bash tmux session 2
+# run the BACnet restful app
+
 $ cd bacnet-restapi/
 
-# Run Python web app
-# create virtual enviornment
-# to install Python packages
+# create virtual enviornment to install Python packages
 $ python3 -m venv env
 
 # activate virtual enviornment
 $ source env/bin/activate
 
-# install packages
+# install packages with pip
 $ pip3 install -r requirements.txt
 
 # start the restapi web app
-$ python3 aioapp.py -ip localhost -port 8080
+$ python3 aioapp.py
+```
 
-# -ip and -port is optional arguments
-# default port is 5000
-# default web IP is 0.0.0.0
-# specifying localhost will lockout api
-# requests from outside the PC
+# Args Note when starting the Python app
+
+```
+# -ip and -port is optional arguments, the default port is 5000.
+# The default web IP is 0.0.0.0.
+# You can specify localhost which will lockout the web app api
+# from external HTTP requests from outside the PC.
+# If running on a rasp pi or seperate device from the Node Red
+# instance just use default or no args for specifying the web app
+# IP address. 
+
+# example to run the web app on local host on port 8080
+$ python3 aioapp.py -ip localhost -port 8080
 
 ```
 
-On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device `192.168.0.190` is an IP based BACnet device and device `201201` (BACnet instance ID) on MSTP network `12345` with hardware address `2` shown. This App supports both MSTP devices and IP based BACnet controllers.
-![Start Up](/images/startup.PNG)
+
+# Node Red Function Block Builder
+
+If the function block builder compiles correctly you should see a block that looks like this:
+
+![functionBlock1](/images/functionBlock1.PNG)
+
+Drag it out on the pallete, open it up to edit:
+
+![functionBlock2](/images/functionBlock2.PNG)
+
+I'm running my Python app on:
+
+![functionBlock3](/images/functionBlock3.PNG)
+
+Wire in an Inject block and set header for json
+`{"content-type":"application/json"}`
+
+As well as the `msg.payload` is your json request for the BACnet instances to read.
+
+![functionBlock4](/images/functionBlock4.PNG)
 
 
 # [Swagger](https://swagger.io/resources/open-api/) for OpenAPI rest endpoints:
 After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
-
-[Pydantic Models](https://pydantic-docs.helpmanual.io/usage/models/) for BACnet requests with BAC0 which is also built into the swagger documentation mentioned above:
-![Swagger2](/images/swagger2.PNG)
 
 
 # Example `GET` HTTP requests to the restapi app with JSON in body:

@@ -127,7 +127,7 @@ BACnet Read Single:
 ```
 
 
-# Example `GET` HTTP requests to the restapi app with JSON in body:
+# Example `GET` HTTP requests to the restapi app with JSON in body for read single:
 
 ```
 {
@@ -218,6 +218,7 @@ returned JSON of sensor readings BACnet present values:
 }
 ```
 
+See swagger definition for writes and release that require extra parameters specifying priority and value to write.
 
 
 

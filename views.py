@@ -5,13 +5,13 @@ from aiohttp import web
 
 from models import ReadSingleModel,WriteSingleModel,ReleaseSingleModel
 from models import ReadMultModel,WriteMultModel,ReleaseMultModel
-from bacnet_actions import BACnetActions
+from bacnet_actions import BacNetWorker
 
 
 # Create your PydanticView and add annotations.
 class ReadSingleView(PydanticView):
     async def get(self, bacnet_req: ReadSingleModel):
-        read_result = await BACnetActions.bacnet_ops(
+        read_result = await BacNetWorker.do_things(
         "read",
         bacnet_req.address,
         bacnet_req.object_type,
@@ -24,7 +24,7 @@ class ReadSingleView(PydanticView):
 
 class WriteSingleView(PydanticView):
     async def get(self, bacnet_req: WriteSingleModel):
-        write_result = await BACnetActions.bacnet_ops(
+        write_result = await BacNetWorker.do_things(
         "write",
         bacnet_req.address,
         bacnet_req.object_type,
@@ -39,7 +39,7 @@ class WriteSingleView(PydanticView):
         
 class ReleaseSingleView(PydanticView):
     async def get(self, bacnet_req: ReleaseSingleModel):
-        release_result = await BACnetActions.bacnet_ops(
+        release_result = await BacNetWorker.do_things(
         "release",
         bacnet_req.address,
         bacnet_req.object_type,
@@ -63,7 +63,7 @@ class ReadMultView(PydanticView):
                 print(attributes)
                 
                 try:
-                    read_result = await BACnetActions.bacnet_ops(
+                    read_result = await BacNetWorker.do_things(
                     "read",
                     attributes['address'],
                     attributes['object_type'],
@@ -92,7 +92,7 @@ class WriteMultView(PydanticView):
                 print(attributes)
                 
                 try:
-                    write_result = await BACnetActions.bacnet_ops(
+                    write_result = await BacNetWorker.do_things(
                     "write",
                     attributes["address"],
                     attributes["object_type"],
@@ -123,7 +123,7 @@ class ReleaseMultView(PydanticView):
                 print(attributes)
                 
                 try:
-                    release_result = await BACnetActions.bacnet_ops(
+                    release_result = await BacNetWorker.do_things(
                     "release",
                     attributes["address"],
                     attributes["object_type"],

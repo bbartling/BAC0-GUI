@@ -21,8 +21,8 @@ print((str(len(device_mapping)) + " devices discovered on network."))
 
 
 # Create your PydanticView and add annotations.
-class BACnetActions(PydanticView):
-    async def bacnet_ops(action,address,object_type,object_instance, **kwargs):
+class BacNetWorker(PydanticView):
+    async def do_things(action,address,object_type,object_instance, **kwargs):
         value = kwargs.get('value', None)
         priority = kwargs.get('priority', None)
 

@@ -137,6 +137,10 @@ BACnet Read Single:
 }
 ```
 
+In node red debug you should see:
+
+![debug_read_single](/images/debug_read_single.PNG)
+
 BACnet Read Multiple:
 ```
 {
@@ -209,7 +213,7 @@ returned JSON of sensor readings BACnet present values:
       "pv": False
     },
     "air_handler_2_fan_command": {
-      "pv": True
+      "pv": active
     },
     "heater_water_valve_cmd": {
       "pv": 87.39
@@ -218,21 +222,18 @@ returned JSON of sensor readings BACnet present values:
 }
 ```
 
+Errors would come through with a string `error` if the point doesnt exist in the BACnet device or if something is actually happening on the BACnet side preventing a proper read, write, or release.
+![debug_read_mult](/images/debug_read_mult.PNG)
+
+
 See swagger definition for writes and release that require extra parameters specifying priority and value to write.
 
 
-
-App also supports BACnet writes and releases, see BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
-https://bac0.readthedocs.io/en/latest/
 
 # Note about Rasp pi Buster:
 Use the [flask_version](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version) if running python 3.7 or default rasp pi Buster image. This has been tested on a rasp pi Buster image with upgrading Python to 3.9 using this tutorial:
 https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
 
-
-## Node Red Example Flows
-[Link for example flows](https://github.com/bbartling/flask-restul-bacnet/tree/main/example-node-red-flows)
-![node_red](/images/node_red_flows.PNG)
 
 
 ## Auto Scan BACnet network

@@ -80,15 +80,9 @@ $ python3 aioapp.py
 
 # Args Note when starting the Python app
 
-```
-# -ip and -port is optional arguments, the default port is 5000.
-# The default web IP is 0.0.0.0.
-# You can specify localhost which will lockout the web app api
-# from external HTTP requests from outside the PC.
-# If running on a rasp pi or seperate device from the Node Red
-# instance just use default or no args for specifying the web app
-# IP address. 
+`-ip` and `-port` are optional arguments for command prompt when starting the Python app. The default port is 5000. The default web IP is 0.0.0.0. You can specify localhost which will lockout the web app api from external HTTP requests from outside the PC. If running on a rasp pi or seperate device from the Node Red instance just use default or no args for specifying the web app IP address. 
 
+```
 # example to run the web app on local host on port 8080
 $ python3 aioapp.py -ip localhost -port 8080
 
@@ -117,9 +111,18 @@ As well as the `msg.payload` is your json request for the BACnet instances to re
 ![functionBlock4](/images/functionBlock4.PNG)
 
 
-# [Swagger](https://swagger.io/resources/open-api/) for OpenAPI rest endpoints:
-After app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
+The `message.payload` can be anything you need from the BACnet system in JSON format. 
+
+# Swagger 2.0 for OpenAPI rest endpoints:
+After Python web app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
+
+BACnet Read Single:
+{
+  "address": "string",
+  "object_type": "string",
+  "object_instance": "string"
+}
 
 
 # Example `GET` HTTP requests to the restapi app with JSON in body:
@@ -134,6 +137,7 @@ BACnet Read Single:
 	"object_instance":"2"
 }
 ```
+
 
 BACnet Read Multiple:
 `192.168.0.105:5000/bacnet/read/multiple` where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
@@ -192,6 +196,9 @@ returned JSON of sensor readings BACnet present values:
   }
 }
 ```
+
+
+
 
 App also supports BACnet writes and releases, see BAC0 documention for what is going under the hood of the aiohttp web app on the BACnet side:
 https://bac0.readthedocs.io/en/latest/

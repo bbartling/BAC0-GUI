@@ -129,6 +129,8 @@ BACnet Read Single:
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for read single:
 
+* Note, "12345:2" represent BACnet hardware address 2 on MSTP network 12345
+
 ```
 {
 	"address":"12345:2",
@@ -175,12 +177,12 @@ BACnet Read Multiple:
     "object_instance":"2"
     },
     "cooling_plant_leaving_temp":{
-    "address":"12345:3",
+    "address":"192.168.0.100",
     "object_type":"multistateValue",
     "object_instance":"225"
     },
     "air_handler_1_fan_status":{
-    "address":"12345:4",
+    "address":"192.168.0.101",
     "object_type":"binaryInput",
     "object_instance":"12"
     },

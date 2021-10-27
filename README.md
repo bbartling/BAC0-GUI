@@ -127,9 +127,6 @@ BACnet Read Single:
 
 # Example `GET` HTTP requests to the restapi app with JSON in body:
 
-BACnet Read Single:
-`192.168.0.105:5000/bacnet/read/single`
-
 ```
 {
 	"address":"12345:2",
@@ -138,9 +135,29 @@ BACnet Read Single:
 }
 ```
 
-
 BACnet Read Multiple:
-`192.168.0.105:5000/bacnet/read/multiple` where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
+{
+  "devices": {
+    "additionalProp1": {
+      "address": "string",
+      "object_type": "string",
+      "object_instance": "string"
+    },
+    "additionalProp2": {
+      "address": "string",
+      "object_type": "string",
+      "object_instance": "string"
+    },
+    "additionalProp3": {
+      "address": "string",
+      "object_type": "string",
+      "object_instance": "string"
+    }
+  }
+}
+
+# Example `GET` HTTP requests to the restapi app with JSON in body for a read multiple:
+* Note where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
 
 ```
 {"devices":{

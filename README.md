@@ -1,6 +1,6 @@
 # bacnet-restapi
 
-This is a RESTful interface to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
+This is a RESTful interface made with Python web stacks and Python BACnet stacks to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
 
 
 ## Overview
@@ -17,17 +17,40 @@ This is a RESTful interface to retrieve data from BACnet building automation sys
 See requirements.txt.
 
 
-## Installation & Usage
+## Installation & Usage With Node Red
 
-```bash
+Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. This app can also run on a seperate device like a rasp pi.
+
+The demo will utilize [Node Red Generator](https://github.com/node-red/node-red-nodegen/wiki)
+
+
+```bash tmux session 1
+# Run Node Red
+
+# install node red generator with npm
+$ npm install -g node-red-nodegen
+
+# git clone the python web app repo
 $ git clone https://github.com/bbartling/bacnet-restapi.git
-# Or using downloaded zip file 
-$ unzip bacnet-restapi.zip
 
 # change the directory
-$ cd bacnet-restapi
+$ cd bacnet-restapi/swagger_json
 
+# auto generate requests with node red gen
+$ sudo node-red-nodegen testing.json
+
+# you could also use the git URL for this tool
+# node-red-nodegen https://github.com/bbartling/bacnet-restapi/blob/main/swagger_json/testing.json
+
+```
+
+
+```bash tmux session 2
+$ cd bacnet-restapi/
+
+# Run Python web app
 # create virtual enviornment
+# to install Python packages
 $ python3 -m venv env
 
 # activate virtual enviornment
@@ -37,7 +60,14 @@ $ source env/bin/activate
 $ pip3 install -r requirements.txt
 
 # start the restapi web app
-$ python3 aioapp.py
+$ python3 aioapp.py -ip localhost -port 8080
+
+# -ip and -port is optional arguments
+# default port is 5000
+# default web IP is 0.0.0.0
+# specifying localhost will lockout api
+# requests from outside the PC
+
 ```
 
 On startup BAC0 performs a BACnet "whois" where the screenshot below shows 2 BACnet devices that replied. Device `192.168.0.190` is an IP based BACnet device and device `201201` (BACnet instance ID) on MSTP network `12345` with hardware address `2` shown. This App supports both MSTP devices and IP based BACnet controllers.

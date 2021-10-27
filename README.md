@@ -118,11 +118,13 @@ After Python web app starts go to the device URL: [http://127.0.0.1:8080/oas](ht
 ![Swagger1](/images/swagger1.PNG)
 
 BACnet Read Single:
+```
 {
   "address": "string",
   "object_type": "string",
   "object_instance": "string"
 }
+```
 
 
 # Example `GET` HTTP requests to the restapi app with JSON in body:
@@ -136,6 +138,7 @@ BACnet Read Single:
 ```
 
 BACnet Read Multiple:
+```
 {
   "devices": {
     "additionalProp1": {
@@ -155,6 +158,7 @@ BACnet Read Multiple:
     }
   }
 }
+```
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a read multiple:
 * Note where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.

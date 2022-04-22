@@ -21,16 +21,17 @@ See requirements.txt.
 
 Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
 
-The demo will utilize [Node Red Generator](https://github.com/node-red/node-red-nodegen/wiki)
+The app is started via SSH into the linux instance and tmux is used to keep the script alive after disconnecting from the SSH session. [tmux Repo Link](https://github.com/tmux/tmux/wiki)
 
 
 
 # Start Python Web App 
 ```
-# bash tmux session 2
-# run the BACnet restful app
-
+# clone git repo and change directory into it
+$ git clone https://github.com/bbartling/bacnet-restapi
 $ cd bacnet-restapi/
+
+# make sure TMUX is started or some other method to keep the script alive after the SSH session is ended
 
 # OPTIONAL STEP 1: create virtual enviornment to install Python packages
 $ python3 -m venv env
@@ -54,10 +55,9 @@ $ python3 aioapp.py
 $ python3 aioapp.py -ip localhost -port 8080
 
 ```
- 
 
 # Swagger 2.0 for OpenAPI rest endpoints:
-After Python web app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
+After Python web app starts go to the device URL, the link is for localhost browsing: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
 
 BACnet Read Single:

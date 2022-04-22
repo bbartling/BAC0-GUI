@@ -53,7 +53,7 @@ $ python3 aioapp.py
 `-auth_user` and `-auth_pass` are optional arguments for command prompt when starting the Python app for HTTP basic authentication. The default username is `admin` and default password is `bacnet`. 
 
 ```
-# example to run the web app on port `8080` with `hulk` for username and `smash` for the HTTP basic authentication. 
+# example to run the web app on port 8080 with hulk for username and smash for the HTTP basic authentication. 
 
 $ python3 aioapp.py -port 8080 -auth_user hulk -auth_pass -smash
 

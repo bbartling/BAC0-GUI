@@ -10,7 +10,7 @@ from bacnet_actions import BacNetWorker
 
 # Create your PydanticView and add annotations.
 class ReadSingleView(PydanticView):
-    async def get(self, bacnet_req: ReadSingleModel):
+    async def post(self, bacnet_req: ReadSingleModel):
         read_result = await BacNetWorker.do_things(
         "read",
         bacnet_req.address,

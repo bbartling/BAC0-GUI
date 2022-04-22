@@ -24,51 +24,18 @@ Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. 
 The demo will utilize [Node Red Generator](https://github.com/node-red/node-red-nodegen/wiki)
 
 
-```
-# tmux window pane 1
 
-
-# Install node red generator with npm
-$ npm install -g node-red-nodegen
-
-# Git clone the python web app repo
-$ git clone https://github.com/bbartling/bacnet-restapi.git
-
-# Change the directory
-$ cd bacnet-restapi/swagger_json
-
-# Auto generate requests with node red gen
-$ sudo node-red-nodegen testing.json
-
-# In the bacnet-restapi/swagger_json directory
-# Change directory to the generated node's directory
-$ node-red-contrib-aiohttp-pydantic-application
-
-# Prepare the symbolic link
-$ sudo npm link
-
-# change directory
-$ cd ~/.node-red
-
-# Change current directory to Node-RED home directory (Typically, Node-RED home directory is ".node-red" under the home directory)
-$ npm link node-red-contrib-aiohttp-pydantic-application
-
-# Start Node-RED
-$ node-red
-```
-
-
-# Start Python Web App
+# Start Python Web App 
 ```
 # bash tmux session 2
 # run the BACnet restful app
 
 $ cd bacnet-restapi/
 
-# create virtual enviornment to install Python packages
+# OPTIONAL STEP 1: create virtual enviornment to install Python packages
 $ python3 -m venv env
 
-# activate virtual enviornment
+# OPTIONAL STEP 2: activate virtual enviornment
 $ source env/bin/activate
 
 # install packages with pip
@@ -87,31 +54,7 @@ $ python3 aioapp.py
 $ python3 aioapp.py -ip localhost -port 8080
 
 ```
-
-
-# Node Red Function Block Builder
-
-If the function block builder compiles correctly you should see a block that looks like this:
-
-![functionBlock1](/images/functionBlock1.PNG)
-
-Drag it out on the pallete, open it up to edit:
-
-![functionBlock2](/images/functionBlock2.PNG)
-
-I'm running my Python app on:
-
-![functionBlock3](/images/functionBlock3.PNG)
-
-Wire in an Inject block and set header for json
-`{"content-type":"application/json"}`
-
-As well as the `msg.payload` is your json request for the BACnet instances to read.
-
-![functionBlock4](/images/functionBlock4.PNG)
-
-
-The `message.payload` can be anything you need from the BACnet system in JSON format. 
+ 
 
 # Swagger 2.0 for OpenAPI rest endpoints:
 After Python web app starts go to the device URL: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:

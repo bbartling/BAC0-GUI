@@ -55,7 +55,7 @@ $ python3 aioapp.py
 ```
 # example to run the web app on port 8080 with hulk for username and smash for the HTTP basic authentication. 
 
-$ python3 aioapp.py -port 8080 -auth_user hulk -auth_pass -smash
+$ python3 aioapp.py -port 8080 -auth_user hulk -auth_pass smash
 
 # See the flask_version of this repo for an older version of this app that uses no authentication if that is desired.
 

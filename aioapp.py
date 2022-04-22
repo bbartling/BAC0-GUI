@@ -13,13 +13,6 @@ from views import ReadMultView,WriteMultView,ReleaseMultView
 
 
 my_parser = argparse.ArgumentParser(description='Run RestApi App as localhost or seperate device')
-
-my_parser.add_argument('-ip',
-                       '--host_address',
-                       required=False,
-                       type=str,
-                       default='0.0.0.0',
-                       help='To run as localhost only:$ python3 aioapp.py -ip localhost')
                        
 my_parser.add_argument('-port',
                        '--port_number',
@@ -45,12 +38,12 @@ my_parser.add_argument('-auth_pass',
 
 args = my_parser.parse_args()
 
-host_address = args.host_address
+
 port_number = args.port_number
 auth_username = args.auth_username
 auth_password = args.auth_password
 
-print('Running Rest App On Address ' + host_address)
+
 print('Running Rest App On Port ' + str(port_number))
 print('Running Rest App http basic authentication username ' + str(auth_username))
 print('Running Rest App http basic authentication password ' + str(auth_password))
@@ -77,7 +70,7 @@ app.router.add_view('/bacnet/write/single', WriteSingleView)
 app.router.add_view('/bacnet/write/multiple', WriteMultView)
 app.router.add_view('/bacnet/release/single', ReleaseSingleView)
 app.router.add_view('/bacnet/release/multiple', ReleaseMultView)
-web.run_app(app, host=host_address, port=port_number)
+web.run_app(app, port=port_number)
 
 
 

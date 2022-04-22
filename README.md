@@ -46,13 +46,18 @@ $ pip3 install -r requirements.txt
 $ python3 aioapp.py
 ```
 
-# Args Note when starting the Python app
+# Args Note when starting the web app for network port and HTTP basic authentication.
 
-`-ip` and `-port` are optional arguments for command prompt when starting the Python app. The default port is 5000. The default web IP is 0.0.0.0. You can specify localhost which will lockout the web app api from external HTTP requests from outside the PC. If running on a rasp pi or seperate device from the Node Red instance just use default or no args for specifying the web app IP address. 
+`-port` is an optional arguments for command prompt when starting the Python app. The default port is 5000 is not port is specified. 
+
+`-auth_user` and `-auth_pass` are optional arguments for command prompt when starting the Python app for HTTP basic authentication. The default username is `admin` and default password is `bacnet`. 
 
 ```
-# example to run the web app on local host on port 8080
-$ python3 aioapp.py -ip localhost -port 8080
+# example to run the web app on port `8080` with `hulk` for username and `smash` for the HTTP basic authentication. 
+
+$ python3 aioapp.py -port 8080 -auth_user hulk -auth_pass -smash
+
+# See the flask_version of this repo for an older version of this app that uses no authentication if that is desired.
 
 ```
 

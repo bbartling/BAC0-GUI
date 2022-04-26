@@ -19,12 +19,13 @@ See requirements.txt.
 
 ## Installation & Usage With Node Red
 
-Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red as rest API calls with [Insomnia](https://insomnia.rest/).
+Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red and with the [Insomnia](https://insomnia.rest/) rest API testing tool. Works on Windows environments as well but the code below for getting up and running for creating the optional virtual environment is for a Linux virtual environment.
 
 This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
 
-The app is started via SSH into the linux instance and tmux is used to keep the script alive after disconnecting from the SSH session. [tmux Repo Link](https://github.com/tmux/tmux/wiki)
+On Linux this app is started via SSH into the linux instance and tmux is used to keep the script alive after disconnecting from the SSH session. [tmux Repo Link](https://github.com/tmux/tmux/wiki)
 
+Older version of the app that has no authentication has some node red flows:
 [Example Node Red Flows](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version/example-node-red-flows).
 
 # Start Python Web App 

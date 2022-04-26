@@ -19,11 +19,13 @@ See requirements.txt.
 
 ## Installation & Usage With Node Red
 
-Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red. This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
+Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red as rest API calls with [Insomnia](https://insomnia.rest/).
+
+This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
 
 The app is started via SSH into the linux instance and tmux is used to keep the script alive after disconnecting from the SSH session. [tmux Repo Link](https://github.com/tmux/tmux/wiki)
 
-
+[Example Node Red Flows](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version/example-node-red-flows).
 
 # Start Python Web App 
 ```
@@ -46,22 +48,17 @@ $ pip3 install -r requirements.txt
 $ python3 aioapp.py
 ```
 
-# Args Note when starting the web app for network port and HTTP basic authentication.
+## Args Note when starting the Python app
 
-`-port` is an optional arguments for command prompt when starting the Python app. The default port is 5000 is not port is specified. 
-
-`-auth_user` and `-auth_pass` are optional arguments for command prompt when starting the Python app for HTTP basic authentication. The default username is `admin` and default password is `bacnet`. 
+`-ip` and `-port` are optional arguments for command prompt when starting the Python app. The default port is 5000. The default web IP is 0.0.0.0. You can specify localhost which will lockout the web app api from external HTTP requests from outside the PC. If running on a rasp pi or seperate device from the Node Red instance just use default or no args for specifying the web app IP address. 
 
 ```
-# example to run the web app on port 8080 with hulk for username and smash for the HTTP basic authentication. 
-
-$ python3 aioapp.py -port 8080 -auth_user hulk -auth_pass smash
-
-# See the flask_version of this repo for an older version of this app that uses no authentication if that is desired.
+# example to run the web app on local host on port 8080
+$ python3 aioapp.py -ip localhost -port 8080
 
 ```
 
-# Swagger 2.0 for OpenAPI rest endpoints:
+## Swagger 2.0 for OpenAPI rest endpoints:
 After Python web app starts go to the device URL, the link is for localhost browsing: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
 
@@ -114,7 +111,7 @@ BACnet Read Multiple:
 }
 ```
 
-# Example `GET` HTTP requests to the restapi app with JSON in body for a read multiple:
+## Example `GET` HTTP requests to the restapi app with JSON in body for a read multiple:
 * Note where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
 
 ```
@@ -180,7 +177,7 @@ See swagger definition for writes and release that require extra parameters spec
 
 
 
-# Note about Rasp pi Buster:
+## Note about Rasp pi Buster:
 Use the [flask_version](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version) if running python 3.7 or default rasp pi Buster image. This has been tested on a rasp pi Buster image with upgrading Python to 3.9 using this tutorial:
 https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
 

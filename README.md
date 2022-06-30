@@ -6,7 +6,10 @@ This is a RESTful interface made with Python web stacks and Python BACnet stacks
 ## Overview
 
 - .gitignore
-- flaskapp.py
+- main.py
+- models.py
+- bacnet_actions.py
+- views.py
 - README.md
 - requirements.txt
 - runtime.txt
@@ -19,14 +22,9 @@ See requirements.txt.
 
 ## Installation & Usage With Node Red
 
-Tested on Ubuntu 20.04 LTS with running the Python web app along side Node Red and with the [Insomnia](https://insomnia.rest/) rest API testing tool. Works on Windows environments as well but the code below for getting up and running for creating the optional virtual environment is for a Linux virtual environment.
-
-This app can also run on a seperate device like a rasp pi but see caveats below if using a `Buster` image that runs Python 3.7.
+Tested on Ubuntu 20.04 LTS and should also work in Windows 10 as well.
 
 On Linux this app is started via SSH into the linux instance and tmux is used to keep the script alive after disconnecting from the SSH session. [tmux Repo Link](https://github.com/tmux/tmux/wiki)
-
-Older version of the app that has no authentication has some node red flows:
-[Example Node Red Flows](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version/example-node-red-flows).
 
 # Start Python Web App 
 ```
@@ -46,7 +44,7 @@ $ source env/bin/activate
 $ pip3 install -r requirements.txt
 
 # start the restapi web app
-$ python3 aioapp.py
+$ python3 main.py
 ```
 
 ## Args Note when starting the Python app
@@ -59,29 +57,31 @@ $ python3 aioapp.py -ip localhost -port 8080
 
 ```
 
+`-use_auth`,  `-auth_user`, and `-auth_pass` are optional arguments for Basic Authentication on the all rest endpoints of the BACnet rest API app. Below would be an example for how to start the APP with authentication and `admin` as the username and `bacnet` as the password. By default authentication is not required.
+
+```
+# example to run the web app on local host on port 8080
+$ python3 aioapp.py -use_auth True -auth_user admin -auth_pass -bacnet
+
+```
+
+
 ## Swagger 2.0 for OpenAPI rest endpoints:
 After Python web app starts go to the device URL, the link is for localhost browsing: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
 ![Swagger1](/images/swagger1.PNG)
 
-BACnet Read Single:
-```
-{
-  "address": "string",
-  "object_type": "string",
-  "object_instance": "string"
-}
-```
 
 
-# Example `GET` HTTP requests to the restapi app with JSON in body for read single:
 
-* Note, "12345:2" represent BACnet hardware address 2 on MSTP network 12345
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on a single point:
+
+* Note, for MSTP network devices use sntax like "12345:2" to represent BACnet hardware address 2 on MSTP network 12345
 
 ```
 {
-	"address":"12345:2",
-	"object_type":"analogInput",
-	"object_instance":"2"
+	"address":"10.200.200.27",
+	"object_type":"binaryOutput",
+	"object_instance":"3"
 }
 ```
 
@@ -89,92 +89,178 @@ In node red debug you should see:
 
 ![debug_read_single](/images/debug_read_single.PNG)
 
-BACnet Read Multiple:
+
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on multiple points:
+
+This example below is reading all cooling compressor status:
 ```
 {
-  "devices": {
-    "additionalProp1": {
-      "address": "string",
-      "object_type": "string",
-      "object_instance": "string"
-    },
-    "additionalProp2": {
-      "address": "string",
-      "object_type": "string",
-      "object_instance": "string"
-    },
-    "additionalProp3": {
-      "address": "string",
-      "object_type": "string",
-      "object_instance": "string"
-    }
-  }
+  "read": 
+				[    
+					{
+						"address": "10.200.200.27",
+						"object_type": "binaryOutput",
+						"object_instance": "3"
+						},
+						 {
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "4"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "5"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "6"
+						}
+				]
 }
 ```
 
-## Example `GET` HTTP requests to the restapi app with JSON in body for a read multiple:
-* Note where below `"devices"` can be limiteless but example only shows boiler, cooling plant, AHU, and hot water valve which are all seperate BACnet devices in the BAS system. Read, write, release multiple can be all from the same device or seperate devices.
+This will return a list where binary output BACnet objects come through in strings as "active" or "inactive":
 
 ```
-{"devices":{
-    "boiler_return_temp":{
-    "address":"12345:2",
-    "object_type":"analogInput",
-    "object_instance":"2"
-    },
-    "cooling_plant_leaving_temp":{
-    "address":"192.168.0.100",
-    "object_type":"multistateValue",
-    "object_instance":"225"
-    },
-    "air_handler_1_fan_status":{
-    "address":"192.168.0.101",
-    "object_type":"binaryInput",
-    "object_instance":"12"
-    },
-    "air_handler_2_fan_command":{
-    "address":"12345:5",
-    "object_type":"binaryOutput",
-    "object_instance":"1"
-    },
-    "heater_water_valve_cmd":{
-    "address":"12345:2",
-    "object_type":"analogOutput",
-    "object_instance":"7"
-    }
-}}
+[
+	"active",
+	"active",
+	"inactive",
+	"inactive"
+]
 ```
 
-returned JSON of sensor readings BACnet present values:
+
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "write" of BACnet present value on a single point:
+
+* Note, same as above on the "read" but with additional params for "value" and BACnet "priority"
 
 ```
+
 {
-  "status": "read_success",
-  "data": {
-    "boiler_return_temp": {
-      "pv": 167.01
-    },
-    "cooling_plant_leaving_temp": {
-      "pv": 44.31
-    },
-    "air_handler_1_fan_status": {
-      "pv": False
-    },
-    "air_handler_2_fan_command": {
-      "pv": active
-    },
-    "heater_water_valve_cmd": {
-      "pv": 87.39
-    }
-  }
+	"address": "10.200.200.27",
+	"object_type": "binaryOutput",
+	"object_instance": "3",
+	"value" : "active",
+	"priority" : "12"
 }
 ```
 
-Errors would come through with a string `error` if the point doesnt exist in the BACnet device or if something is actually happening on the BACnet side preventing a proper read, write, or release.
-![debug_read_mult](/images/debug_read_mult.PNG)
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "write" BACnet present value on multiple points:
+
+This example below is writing values all cooling compressor status:
+```
+{
+  "write": 
+				[    
+					{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "3",
+							"value" : "active",
+							"priority" : "12"
+						},
+						 {
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "4",
+							"value" : "active",
+							"priority" : "12"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "5",
+							"value" : "active",
+							"priority" : "12"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "6",
+							"value" : "active",
+							"priority" : "12"
+						}
+				]
+}
+
+```
+
+This will return a list of the status for the BACnet writes made to the cooling compressors:
+
+```
+[
+	"success",
+	"success",
+	"success",
+	"success"
+]
+```
 
 
-See swagger definition for writes and release that require extra parameters specifying priority and value to write.
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "release" of BACnet present value on a single point:
+
+* Note, same as above on the "write" but without the param for "value"
+
+```
+
+{
+	"address": "10.200.200.27",
+	"object_type": "binaryOutput",
+	"object_instance": "3",
+	"priority" : "12"
+}
+```
+
+# Example `GET` HTTP requests to the restapi app with JSON in body for a "release" BACnet present value on multiple points:
+
+This example below is releasing all cooling compressor BACnet writes on priority 12:
+```
+{
+  "release": 
+				[    
+					{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "3",
+							"priority" : "12"
+						},
+						 {
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "4",
+							"priority" : "12"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "5",
+							"priority" : "12"
+						},
+						{
+							"address": "10.200.200.27",
+							"object_type": "binaryOutput",
+							"object_instance": "6",
+							"priority" : "12"
+						}
+				]
+}
+
+
+```
+
+This will return a list of the status for the BACnet releases made to the cooling compressors:
+
+```
+[
+	"success",
+	"success",
+	"success",
+	"success"
+]
+```
 
 
 
@@ -185,19 +271,11 @@ https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
 
 
 ## Auto Scan BACnet network
-See the [scanning_scripts](https://github.com/bbartling/bacnet-restapi/tree/main/scanning_scripts) directory of this repo for an experimental process of auto scanning the BACnet to compile results into a CSV file.
+Check out [BACpypes-snapshot](https://github.com/JoelBender/bacpypes-snapshot) which is a cool tool to see what the BACnet network has for devices and BACnet point attributes for all devices.
 
 
 ## Issues and comments
 Please submit git issues to improve app as well as bugs found during testing. 
-
-
-## Inspiration
-The idea for this tool is from the VOLTTRON platform developed by PNNL on the BACnet features with RPC to grab data from a BACnet building automation system. 
-[volttron github](https://github.com/VOLTTRON/volttron)
-
-Nube-IO is also a Node-Red IoT platform that also takes advantages of Python BACnet stacks, see there git repo as well for similar tools that can also incorporate MQTT protocol like the `rubix` apps.
-[nube-io github](https://github.com/NubeIO)
 
 
 ## Author
@@ -208,7 +286,7 @@ Nube-IO is also a Node-Red IoT platform that also takes advantages of Python BAC
 
 【MIT License】
 
-Copyright 2021 Ben Bartling
+Copyright 2022 Ben Bartling
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

@@ -1,4 +1,4 @@
-from typing import Any, AsyncIterator, Awaitable, Callable, Dict
+from typing import Union, List
 from pydantic import BaseModel
 
 
@@ -26,15 +26,13 @@ class ReleaseSingleModel(BaseModel):
     
     
 class ReadMultModel(BaseModel):
-    devices: Dict[str, ReadSingleModel]
-
+    read: List[ReadSingleModel]
 
 class WriteMultModel(BaseModel):
-    devices: Dict[str, WriteSingleModel]
-
+    write: List[WriteSingleModel]
 
 class ReleaseMultModel(BaseModel):
-    devices: Dict[str, ReleaseSingleModel]
+    release: List[ReleaseSingleModel]
 
 
 

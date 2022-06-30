@@ -10,137 +10,114 @@ from bacnet_actions import BacNetWorker
 
 # Create your PydanticView and add annotations.
 class ReadSingleView(PydanticView):
-    async def post(self, bacnet_req: ReadSingleModel):
+
+    async def get(self, bacnet_req: ReadSingleModel):
         read_result = await BacNetWorker.do_things(
-        "read",
-        bacnet_req.address,
-        bacnet_req.object_type,
-        bacnet_req.object_instance
+        action = "read",
+        dev_address = bacnet_req.address,
+        object_type = bacnet_req.object_type,
+        object_instance = bacnet_req.object_instance
         )
-        response_obj = {"status":"read_success", "pv" : read_result}
-        return web.json_response(response_obj)
+        return web.json_response(read_result)
 
 
 
 class WriteSingleView(PydanticView):
+
     async def get(self, bacnet_req: WriteSingleModel):
         write_result = await BacNetWorker.do_things(
-        "write",
-        bacnet_req.address,
-        bacnet_req.object_type,
-        bacnet_req.object_instance,
+        action = "write",
+        dev_address = bacnet_req.address,
+        object_type = bacnet_req.object_type,
+        object_instance = bacnet_req.object_instance,
         value = bacnet_req.value,
         priority = bacnet_req.priority
         )
-        response_obj = {"status":"write_success", "info": write_result}
-        return web.json_response(response_obj)
+        return web.json_response(write_result)
         
         
         
 class ReleaseSingleView(PydanticView):
+
     async def get(self, bacnet_req: ReleaseSingleModel):
         release_result = await BacNetWorker.do_things(
-        "release",
-        bacnet_req.address,
-        bacnet_req.object_type,
-        bacnet_req.object_instance,
+        action = "release",
+        dev_address = bacnet_req.address,
+        object_type = bacnet_req.object_type,
+        object_instance = bacnet_req.object_instance,
         priority = bacnet_req.priority
         )
-        response_obj = {"status":"release_success", "info": release_result}
-        return web.json_response(response_obj)
+        return web.json_response(release_result)
 
 
 
 class ReadMultView(PydanticView):
+
     async def get(self, bacnet_req: ReadMultModel):
-        device_mapping = {}
+        final_resp = []
         data_as_dict = bacnet_req.dict()
         print("ReadMultView ",data_as_dict)
         
-        for info,devices in data_as_dict.items():
-            for device,attributes in devices.items():
-                print(device)
-                print(attributes)
+        for obj in data_as_dict.values():
+            for point in obj:
+
+                read_result = await BacNetWorker.do_things(
+                action = "read",
+                dev_address = point['address'],
+                object_type = point['object_type'],
+                object_instance = point['object_instance']
+                )
                 
-                try:
-                    read_result = await BacNetWorker.do_things(
-                    "read",
-                    attributes['address'],
-                    attributes['object_type'],
-                    attributes['object_instance']
-                    )
-                    
-                    device_mapping[device] = {'pv':read_result}
-
-                except:
-                    device_mapping[device] = {'pv' : 'error'}
-
-        response_obj = {"status":"read_success", "data": device_mapping }    
-        return web.json_response(response_obj)
+                final_resp.append(read_result)
+        return web.json_response(final_resp)
 
 
 
 class WriteMultView(PydanticView):
+
     async def get(self, bacnet_req: WriteMultModel):
-        device_mapping = {}
+        final_resp = []
         data_as_dict = bacnet_req.dict()
         print("WriteMultView ",data_as_dict)
         
-        for info,devices in data_as_dict.items():
-            for device,attributes in devices.items():
-                print(device)
-                print(attributes)
+        for obj in data_as_dict.values():
+            for point in obj:
                 
-                try:
-                    write_result = await BacNetWorker.do_things(
-                    "write",
-                    attributes["address"],
-                    attributes["object_type"],
-                    attributes["object_instance"],
-                    value = attributes["value"],
-                    priority = attributes["priority"]
-                    )
+                write_result = await BacNetWorker.do_things(
+                action = "write",
+                dev_address = point["address"],
+                object_type = point["object_type"],
+                object_instance = point["object_instance"],
+                value = point["value"],
+                priority = point["priority"]
+                )
                     
-                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : write_result }
-                    
-                except:
-                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : 'error' }
-
-        response_obj = {"status":"write_success", "data": device_mapping }    
-        return web.json_response(response_obj)
+                final_resp.append(write_result)
+        return web.json_response(final_resp)
         
         
         
 class ReleaseMultView(PydanticView):
     async def get(self, bacnet_req: ReleaseMultModel):
-        device_mapping = {}
+
+        final_resp = []
         data_as_dict = bacnet_req.dict()
         print("ReleaseMultView ",data_as_dict)
-        
-        for info,devices in data_as_dict.items():
-            for device,attributes in devices.items():
-                print(device)
-                print(attributes)
+
+        for obj in data_as_dict.values():
+            for point in obj:
                 
-                try:
-                    release_result = await BacNetWorker.do_things(
-                    "release",
-                    attributes["address"],
-                    attributes["object_type"],
-                    attributes["object_instance"],
-                    priority = attributes["priority"]
-                    )
-                    
-                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : release_result }
-                    
-                except:
-                    device_mapping[device] = {attributes["object_type"] + ' ' + attributes["object_instance"] : 'error' }
+                release_result = await BacNetWorker.do_things(
+                action = "release",
+                dev_address = point["address"],
+                object_type = point["object_type"],
+                object_instance = point["object_instance"],
+                priority = point["priority"]
+                )
+                
 
-        response_obj = {"status":"release_success", "data": device_mapping }    
-        return web.json_response(response_obj)
-
-
-
+                final_resp.append(release_result)
+        return web.json_response(final_resp)
 
 
 

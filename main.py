@@ -21,6 +21,13 @@ my_parser.add_argument('-port',
                        default=5000,
                        help='To change port run:$ python3 aioapp.py -port 8080')
 
+my_parser.add_argument('-use_auth',
+                       '--use_authentication',
+                       required=False,
+                       type=bool,
+                       default=False,
+                       help='boolean to use authentication for rest gateway')
+
 my_parser.add_argument('-auth_user',
                        '--auth_username',
                        required=False,
@@ -38,15 +45,13 @@ my_parser.add_argument('-auth_pass',
 
 args = my_parser.parse_args()
 
-
 port_number = args.port_number
 auth_username = args.auth_username
 auth_password = args.auth_password
-
+use_authentication = args.use_authentication
 
 print('Running Rest App On Port ' + str(port_number))
-print('Running Rest App http basic authentication username ' + str(auth_username))
-print('Running Rest App http basic authentication password ' + str(auth_password))
+
 
 
 @middleware
@@ -57,8 +62,16 @@ async def _not_found_to_404(request, handler):
         return json_response({"key_error": f"{error}"}, status=404)
 
 
-auth = BasicAuthMiddleware(username=auth_username, password=auth_password)
-app = Application(middlewares=[_not_found_to_404,auth])
+if use_authentication:
+    auth = BasicAuthMiddleware(username=auth_username, password=auth_password)
+    app = Application(middlewares=[_not_found_to_404,auth])
+    print('Running Rest App http basic authentication username ' + str(auth_username))
+    print('Running Rest App http basic authentication password ' + str(auth_password))
+    
+else:
+    app = Application(middlewares=[_not_found_to_404])
+    print('Running Rest App http with no authentication')
+
 
 # open API splash screen
 oas.setup(app, version_spec="1.0.1", title_spec="BACnet Rest API App")

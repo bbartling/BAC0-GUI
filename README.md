@@ -75,17 +75,20 @@ After Python web app starts go to the device URL, the link in this example is fo
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on a single point:
 
 * Note, for MSTP network devices use sntax like "12345:2" to represent BACnet hardware address 2 on MSTP network 12345
+* http://127.0.0.1:5000/bacnet/read/single
 
 ```
 {
-	"address":"10.200.200.27",
-	"object_type":"binaryOutput",
-	"object_instance":"3"
+  "address":"10.200.200.27",
+  "object_type":"binaryOutput",
+  "object_instance":"3"
 }
 ```
 
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on multiple points:
+
+* http://127.0.0.1:5000/bacnet/read/multiple
 
 This example below is reading all cooling compressor status:
 ```
@@ -131,21 +134,24 @@ This will return a list where binary output BACnet objects come through in strin
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "write" of BACnet present value on a single point:
 
 * Note, same as above on the "read" but with additional params for "value" and BACnet "priority"
+* http://127.0.0.1:5000/bacnet/write/single
 
 ```
 
 {
-	"address": "10.200.200.27",
-	"object_type": "binaryOutput",
-	"object_instance": "3",
-	"value" : "active",
-	"priority" : "12"
+  "address": "10.200.200.27",
+  "object_type": "binaryOutput",
+  "object_instance": "3",
+  "value" : "active",
+  "priority" : "12"
 }
 ```
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "write" BACnet present value on multiple points:
 
+* http://127.0.0.1:5000/bacnet/write/multiple
 This example below is writing values all cooling compressor status:
+
 ```
 {
 "write": 
@@ -187,10 +193,10 @@ This will return a list of the status for the BACnet writes made to the cooling 
 
 ```
 [
-	"success",
-	"success",
-	"success",
-	"success"
+  "success",
+  "success",
+  "success",
+  "success"
 ]
 ```
 
@@ -198,20 +204,23 @@ This will return a list of the status for the BACnet writes made to the cooling 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "release" of BACnet present value on a single point:
 
 * Note, same as above on the "write" but without the param for "value"
+* http://127.0.0.1:5000/bacnet/release/single
 
 ```
 
 {
-	"address": "10.200.200.27",
-	"object_type": "binaryOutput",
-	"object_instance": "3",
-	"priority" : "12"
+  "address": "10.200.200.27",
+  "object_type": "binaryOutput",
+  "object_instance": "3",
+  "priority" : "12"
 }
 ```
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "release" BACnet present value on multiple points:
 
+* http://127.0.0.1:5000/bacnet/release/multiple
 This example below is releasing all cooling compressor BACnet writes on priority 12:
+
 ```
 {
 "release": 
@@ -250,10 +259,10 @@ This will return a list of the status for the BACnet releases made to the coolin
 
 ```
 [
-	"success",
-	"success",
-	"success",
-	"success"
+  "success",
+  "success",
+  "success",
+  "success"
 ]
 ```
 

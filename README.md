@@ -84,10 +84,6 @@ After Python web app starts go to the device URL, the link in this example is fo
 }
 ```
 
-In node red debug you should see:
-
-![debug_read_single](/images/debug_read_single.PNG)
-
 
 # Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on multiple points:
 

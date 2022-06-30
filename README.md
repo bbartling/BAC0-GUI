@@ -1,6 +1,6 @@
 # bacnet-restapi
 
-This is a RESTful interface made with Python web stacks and Python BACnet stacks to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
+This is a RESTful interface made with Python web stacks and Python BACnet stacks to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands on BACnet `presentValue` point attributes. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
 
 
 ## Overview
@@ -53,7 +53,7 @@ $ python3 main.py
 
 ```
 # example to run the web app on local host on port 8080
-$ python3 aioapp.py -ip localhost -port 8080
+$ python3 main.py -ip localhost -port 8080
 
 ```
 
@@ -61,15 +61,14 @@ $ python3 aioapp.py -ip localhost -port 8080
 
 ```
 # example to run the web app on local host on port 8080
-$ python3 aioapp.py -use_auth True -auth_user admin -auth_pass -bacnet
+$ python3 main.py -use_auth True -auth_user admin -auth_pass bacnet
 
 ```
 
 
 ## Swagger 2.0 for OpenAPI rest endpoints:
-After Python web app starts go to the device URL, the link is for localhost browsing: [http://127.0.0.1:8080/oas](http://127.0.0.1:8080/oas) to bring up a page that looks like this below:
+After Python web app starts go to the device URL, the link in this example is for localhost browsing: [http://127.0.0.1:5000/oas](http://127.0.0.1:5000/oas) but replace `127.0.0.1` with the IP address of your device running this app:
 ![Swagger1](/images/swagger1.PNG)
-
 
 
 
@@ -95,29 +94,29 @@ In node red debug you should see:
 This example below is reading all cooling compressor status:
 ```
 {
-  "read": 
-				[    
-					{
-						"address": "10.200.200.27",
-						"object_type": "binaryOutput",
-						"object_instance": "3"
-						},
-						 {
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "4"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "5"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "6"
-						}
-				]
+"read": 
+  [    
+    {
+      "address": "10.200.200.27",
+      "object_type": "binaryOutput",
+      "object_instance": "3"
+      },
+        {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "4"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "5"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "6"
+      }
+  ]
 }
 ```
 
@@ -125,10 +124,10 @@ This will return a list where binary output BACnet objects come through in strin
 
 ```
 [
-	"active",
-	"active",
-	"inactive",
-	"inactive"
+  "active",
+  "active",
+  "inactive",
+  "inactive"
 ]
 ```
 
@@ -153,37 +152,37 @@ This will return a list where binary output BACnet objects come through in strin
 This example below is writing values all cooling compressor status:
 ```
 {
-  "write": 
-				[    
-					{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "3",
-							"value" : "active",
-							"priority" : "12"
-						},
-						 {
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "4",
-							"value" : "active",
-							"priority" : "12"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "5",
-							"value" : "active",
-							"priority" : "12"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "6",
-							"value" : "active",
-							"priority" : "12"
-						}
-				]
+"write": 
+  [    
+    {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "3",
+        "value" : "active",
+        "priority" : "12"
+      },
+        {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "4",
+        "value" : "active",
+        "priority" : "12"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "5",
+        "value" : "active",
+        "priority" : "12"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "6",
+        "value" : "active",
+        "priority" : "12"
+      }
+  ]
 }
 
 ```
@@ -219,33 +218,33 @@ This will return a list of the status for the BACnet writes made to the cooling 
 This example below is releasing all cooling compressor BACnet writes on priority 12:
 ```
 {
-  "release": 
-				[    
-					{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "3",
-							"priority" : "12"
-						},
-						 {
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "4",
-							"priority" : "12"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "5",
-							"priority" : "12"
-						},
-						{
-							"address": "10.200.200.27",
-							"object_type": "binaryOutput",
-							"object_instance": "6",
-							"priority" : "12"
-						}
-				]
+"release": 
+  [    
+    {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "3",
+        "priority" : "12"
+      },
+        {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "4",
+        "priority" : "12"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "5",
+        "priority" : "12"
+      },
+      {
+        "address": "10.200.200.27",
+        "object_type": "binaryOutput",
+        "object_instance": "6",
+        "priority" : "12"
+      }
+  ]
 }
 
 
@@ -265,7 +264,7 @@ This will return a list of the status for the BACnet releases made to the coolin
 
 
 ## Note about Rasp pi Buster:
-Use the [flask_version](https://github.com/bbartling/bacnet-restapi/tree/main/flask_version) if running python 3.7 or default rasp pi Buster image. This has been tested on a rasp pi Buster image with upgrading Python to 3.9 using this tutorial:
+If running python 3.7 or default rasp pi Buster image. This has been tested on a rasp pi Buster image with upgrading Python to 3.9 using this tutorial:
 https://itheo.tech/ultimate-python-installation-on-a-raspberry-pi-ubuntu-script
 
 

@@ -8,11 +8,12 @@ from models import ReadMultModel,WriteMultModel,ReleaseMultModel
 from bacnet_actions import BacNetWorker
 
 
+
 # Create your PydanticView and add annotations.
 class ReadSingleView(PydanticView):
 
     async def get(self, bacnet_req: ReadSingleModel):
-        read_result = await BacNetWorker.do_things(
+        read_result = await BacNetWorker.do_things(self,
         action = "read",
         dev_address = bacnet_req.address,
         object_type = bacnet_req.object_type,
@@ -25,7 +26,7 @@ class ReadSingleView(PydanticView):
 class WriteSingleView(PydanticView):
 
     async def get(self, bacnet_req: WriteSingleModel):
-        write_result = await BacNetWorker.do_things(
+        write_result = await BacNetWorker.do_things(self,
         action = "write",
         dev_address = bacnet_req.address,
         object_type = bacnet_req.object_type,
@@ -40,7 +41,7 @@ class WriteSingleView(PydanticView):
 class ReleaseSingleView(PydanticView):
 
     async def get(self, bacnet_req: ReleaseSingleModel):
-        release_result = await BacNetWorker.do_things(
+        release_result = await BacNetWorker.do_things(self,
         action = "release",
         dev_address = bacnet_req.address,
         object_type = bacnet_req.object_type,
@@ -61,7 +62,7 @@ class ReadMultView(PydanticView):
         for obj in data_as_dict.values():
             for point in obj:
 
-                read_result = await BacNetWorker.do_things(
+                read_result = await BacNetWorker.do_things(self,
                 action = "read",
                 dev_address = point['address'],
                 object_type = point['object_type'],
@@ -83,7 +84,7 @@ class WriteMultView(PydanticView):
         for obj in data_as_dict.values():
             for point in obj:
                 
-                write_result = await BacNetWorker.do_things(
+                write_result = await BacNetWorker.do_things(self,
                 action = "write",
                 dev_address = point["address"],
                 object_type = point["object_type"],
@@ -98,6 +99,7 @@ class WriteMultView(PydanticView):
         
         
 class ReleaseMultView(PydanticView):
+
     async def get(self, bacnet_req: ReleaseMultModel):
 
         final_resp = []
@@ -107,7 +109,7 @@ class ReleaseMultView(PydanticView):
         for obj in data_as_dict.values():
             for point in obj:
                 
-                release_result = await BacNetWorker.do_things(
+                release_result = await BacNetWorker.do_things(self,
                 action = "release",
                 dev_address = point["address"],
                 object_type = point["object_type"],

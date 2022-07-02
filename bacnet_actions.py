@@ -1,29 +1,41 @@
 import BAC0
 import time
 from aiohttp_pydantic import PydanticView
+import threading
 
 
-# define BAC0 app
-#STATIC_BACNET_IP = '192.168.0.103/24'
-#bacnet = BAC0.lite(IP=STATIC_BACNET_IP)
-bacnet = BAC0.lite()
 
-# BACnet scan network
-time.sleep(1)
-'''
-devices = bacnet.whois(global_broadcast=True)
-device_mapping = {}
-for device in devices:
-    if isinstance(device, tuple):
-        device_mapping[device[1]] = device[0]
-        print("Detected device %s with address %s" % (str(device[1]), str(device[0])))
-print(device_mapping)
-print((str(len(device_mapping)) + " devices discovered on network."))
-'''
+class bac0_app(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run():
+        global bacnet
+        # define BAC0 app
+        #STATIC_BACNET_IP = '192.168.0.103/24'
+        #bacnet = BAC0.lite(IP=STATIC_BACNET_IP)
+
+        bacnet = BAC0.lite()
+
+    # BACnet scan network
+    time.sleep(1)
+
+    '''
+    devices = bacnet.whois(global_broadcast=True)
+    device_mapping = {}
+    for device in devices:
+        if isinstance(device, tuple):
+            device_mapping[device[1]] = device[0]
+            print("Detected device %s with address %s" % (str(device[1]), str(device[0])))
+    print(device_mapping)
+    print((str(len(device_mapping)) + " devices discovered on network."))
+    '''
 
 # Create your PydanticView and add annotations.
 class BacNetWorker(PydanticView):
-    async def do_things(**kwargs):
+
+    async def do_things(self,**kwargs):
+        global bacnet
 
         action = kwargs.get('action', None)
         address = kwargs.get('dev_address', None)

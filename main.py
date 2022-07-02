@@ -10,7 +10,9 @@ from aiohttp_pydantic import oas
 from views import ReadSingleView,WriteSingleView,ReleaseSingleView
 from views import ReadMultView,WriteMultView,ReleaseMultView
 
+from bacnet_actions import bac0_app
 
+bac0_app.run()
 
 my_parser = argparse.ArgumentParser(description='Run RestApi App as localhost or seperate device')
                        
@@ -84,8 +86,4 @@ app.router.add_view('/bacnet/write/multiple', WriteMultView)
 app.router.add_view('/bacnet/release/single', ReleaseSingleView)
 app.router.add_view('/bacnet/release/multiple', ReleaseMultView)
 web.run_app(app, port=port_number)
-
-
-
-
 

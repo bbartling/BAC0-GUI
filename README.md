@@ -44,14 +44,28 @@ $ pip3 install -r requirements.txt
 $ python3 main.py
 ```
 
+* Note web app runs on port 8080
 
-
-# Example `GET` HTTP requests to the restapi app with JSON in body for a "read" of BACnet present value on a single point:
-
+# Example `GET` HTTP requests to the restapi app for a "read" of BACnet present value:
+* [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#read-examples) for read requests
 * Note, for MSTP network devices use sntax like "12345:2" to represent BACnet hardware address 2 on MSTP network 12345
-* http://127.0.0.1:5000/bacnet/read/single
+* http://127.0.0.1:8080/read 10.200.200.27 binaryOutput 3
+
+This would be read the BACnet present value of binary output 3 on device 10.200.200.27.
 
 
+# Example `GET` HTTP requests to the restapi app for a "write" of BACnet present value:
+* [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#write-to-property) for write requests but note this web app only permits `presentValue` operations
+* http://127.0.0.1:8080/write 10.200.200.27 binaryOutput 3 active 12
+
+This would be write the BACnet present value of binary output 3 on device 10.200.200.27 to "active" on BACnet prority 12. Another item to note is Boolean objects are strings in BAC0 as "active" or "inactive" where in this example the cooling compressors on the rooftop HVAC have a status of either "active" or "inactive."
+
+
+# Example `GET` HTTP requests to the restapi app for a "release" of BACnet present value:
+* This uses the BAC0 write syntax but minus a value to "write," for example in the browser:
+* http://127.0.0.1:8080/release 10.200.200.27 binaryOutput 3 12
+
+This would be release the BACnet present value of binary output 3 on device 10.200.200.27 on BACnet priority 12. Under the hood in the web app `null` in BAC0 represent release but incorporating a `null` value is handled by the web app.
 
 
 ## Note about Rasp pi Buster:
@@ -69,11 +83,9 @@ Please submit git issues to improve app as well as bugs found during testing.
 
 
 ## Author
-
 [linkedin](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
 
 ## Licence
-
 【MIT License】
 
 Copyright 2022 Ben Bartling

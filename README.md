@@ -44,7 +44,8 @@ $ pip3 install -r requirements.txt
 $ python3 main.py
 ```
 
-* Note web app runs on port 8080
+* Note web app runs on port 8080. A `GET` request on the base URL will return server time in UTC ISO format. Examples below the base URL is `127.0.0.1` but just replace this with whatever the IP address is of your machine that you are running this app on.
+
 
 # Example `GET` HTTP requests to the restapi app for a "read" of BACnet present value:
 * [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#read-examples) for read requests to understand what runs under the hood in the web app

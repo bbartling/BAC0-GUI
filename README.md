@@ -52,7 +52,7 @@ $ python3 main.py
 
  In the browser this will look like: `http://127.0.0.1:8080/read 10.200.200.27 binaryOutput 3`
 
-This would be read the BACnet present value of binary output 3 on device 10.200.200.27 and return JSON `"active"` or `"inactive"` because its a binary output or Boolean type of point.
+This would be read the BACnet present value of binary output 3 on device 10.200.200.27 and return JSON `"active"` or `"inactive"` because its a binary output or Boolean type of point. Boolean objects are strings in BAC0 as "active" or "inactive" where in this example the cooling compressors on the rooftop HVAC have a status of either "active" or "inactive."
 
 
 # Example `GET` HTTP requests to the restapi app for a "write" of BACnet present value:
@@ -60,7 +60,7 @@ This would be read the BACnet present value of binary output 3 on device 10.200.
 
 In the browser this will look like: `http://127.0.0.1:8080/write 10.200.200.27 binaryOutput 3 active 12`
 
-This would be write the BACnet present value of binary output 3 on device 10.200.200.27 to "active" on BACnet prority 12. Another item to note is Boolean objects are strings in BAC0 as "active" or "inactive" where in this example the cooling compressors on the rooftop HVAC have a status of either "active" or "inactive."
+This would be write the BACnet present value of binary output 3 on device 10.200.200.27 to "active" on BACnet prority 12.
 
 
 # Example `GET` HTTP requests to the restapi app for a "release" of BACnet present value:

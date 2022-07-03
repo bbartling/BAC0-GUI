@@ -1,6 +1,6 @@
 # bacnet-restapi
 
-This is a RESTful interface made with Python web stacks and Python BACnet stacks to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands on BACnet `presentValue` point attributes. The idea is to run this app along side the BAS on a buildings LAN which is NOT a cloud environment.
+This is a RESTful interface made with Python web stacks and Python BACnet stacks to retrieve data from BACnet building automation systems (BAS) with typical industry standard BACnet read, writes, and release commands on BACnet `presentValue` point attributes. The idea is to run this app along side the BAS on a buildings LAN (NOT a cloud environment) and receive data back in JSON format.
 
 
 ## Overview

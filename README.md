@@ -52,7 +52,7 @@ $ python3 main.py
 
  In the browser this will look like: `http://127.0.0.1:8080/read 10.200.200.27 binaryOutput 3`
 
-This would be read the BACnet present value of binary output 3 on device 10.200.200.27.
+This would be read the BACnet present value of binary output 3 on device 10.200.200.27 and return JSON `"active"` or `"inactive"` because its a binary output or Boolean type of point.
 
 
 # Example `GET` HTTP requests to the restapi app for a "write" of BACnet present value:

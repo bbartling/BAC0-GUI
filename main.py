@@ -1,5 +1,5 @@
 import asyncio
-from aiohttp import web
+from aiohttp.web import Application, json_response, middleware, AppRunner,  get
 
 import BAC0
 
@@ -11,6 +11,67 @@ from models import ReleaseRequestModel
 from models import ValueModel
 from pydantic import ValidationError
 import json
+
+from aiohttp_basicauth import BasicAuthMiddleware
+import argparse
+
+
+my_parser = argparse.ArgumentParser(description='Run RestApi App as localhost or seperate device')
+                       
+my_parser.add_argument('-port',
+                       '--port_number',
+                       required=False,
+                       type=int,
+                       default=8080,
+                       help='To change port run:$ python3 aioapp.py -port 8080')
+
+my_parser.add_argument('-auth_user',
+                       '--auth_username',
+                       required=False,
+                       type=str,
+                       default="admin",
+                       help='username for http basic authentication')
+
+my_parser.add_argument('-auth_pass',
+                       '--auth_password',
+                       required=False,
+                       type=str,
+                       default="bacnet",
+                       help='password for http basic authentication')
+
+my_parser.add_argument('-use_basic_auth',
+                       '--basic_auth',
+                       required=False,
+                       type=bool,
+                       default=False,
+                       help='Boolean to use basic auth http basic authentication')
+
+
+args = my_parser.parse_args()
+
+
+port_number = args.port_number
+auth_username = args.auth_username
+auth_password = args.auth_password
+basic_auth = args.basic_auth
+
+
+print('Running Rest App On Port ' + str(port_number))
+print('Running Rest App http basic auth setting ' + str(basic_auth))
+
+if basic_auth:
+    print('Running Rest App http basic authentication username ' + str(auth_username))
+    print('Running Rest App http basic authentication password ' + str(auth_password))
+
+
+
+@middleware
+async def _not_found_to_404(request, handler):
+    try:
+        return await handler(request)
+    except Exception as error:
+        return json_response({"key_error": f"{error}"}, status=404)
+
 
 
 # ran in asyncio executor for blocking io
@@ -70,7 +131,7 @@ async def handle(request):
                 except ValidationError as error:
                     print("ReadRequestModel Error: ",error)
                     bacnet_req = f"error: {error}"
-                    return web.json_response({bacnet_req}, status=400)
+                    return json_response({bacnet_req}, status=400)
 
 
             elif action == "write":
@@ -113,12 +174,12 @@ async def handle(request):
                     except ValidationError as error:
                         print("TestWriteValue Error: ",error)
                         bacnet_req = f"error: {error}"
-                        return web.json_response({bacnet_req}, status=400)
+                        return json_response({bacnet_req}, status=400)
 
                 except ValidationError as error:
                     print("WriteRequestModel Error: ",error)
                     bacnet_req = f"error: {error}"
-                    return web.json_response({bacnet_req}, status=400)
+                    return json_response({bacnet_req}, status=400)
 
 
 
@@ -153,41 +214,50 @@ async def handle(request):
                 except ValidationError as error:
                     print("ReleaseRequestModel Error: ",error)
                     bacnet_req = f"error: {error}"
-                    return web.json_response({bacnet_req}, status=400)
+                    return json_response({bacnet_req}, status=400)
 
 
             else:
                 bacnet_req = f"error: request is not a read, write, or release"
                 bacnet_req = f"error: {error}"
-                return web.json_response({bacnet_req}, status=400)
+                return json_response({bacnet_req}, status=400)
 
         except Exception as error:
             bacnet_req = f"error: {error}"
-            return web.json_response({bacnet_req}, status=400)
+            return json_response({bacnet_req}, status=400)
 
-    return web.json_response(bacnet_req)
+    return json_response(bacnet_req)
 
 
 async def start_api_server():
-    print("starting api")
-    loop = asyncio.get_event_loop()
-    app = web.Application()
-    app.add_routes([web.get("/", handle),
-                    web.get("/{bacnet_req}", handle)])
 
+    print("Starting Restful Api")
+    loop = asyncio.get_event_loop()
+
+    if basic_auth:
+        auth = BasicAuthMiddleware(username=auth_username, password=auth_password)
+        app = Application(middlewares=[_not_found_to_404,auth])
+
+    else:
+        app = Application()
+
+    app.add_routes([get("/", handle),
+                    get("/bacnet/", handle),
+                    get("/bacnet/{bacnet_req}", handle)])
 
     #web.run_app(app)
-    runner = web.AppRunner(app)
+    runner = AppRunner(app)
     await runner.setup()
-    await loop.create_server(runner.server, "0.0.0.0", 8080)
-    print("Server started at http://0.0.0.0:8080...")
+    await loop.create_server(runner.server, "0.0.0.0", port_number)
+    print(f"Server started on TCP http://0.0.0.0:{port_number}")
 
 
 
 async def bacnet_worker():
     global bacnet
-    print("starting bacnet worker")
+    print("Starting BACnet Api")
     bacnet = BAC0.lite()
+    print("starting BACnet BAC0 API on UPD port 47808")
     while True:
         await asyncio.sleep(.1)
 

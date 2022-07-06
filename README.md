@@ -45,14 +45,26 @@ $ pip3 install -r requirements.txt
 $ python3 main.py
 ```
 
-* Note web app runs on port 8080. A `GET` request on the base URL will return server time in UTC ISO format. Examples below the base URL is `127.0.0.1` but just replace this with whatever the IP address is of your machine that you are running this app on.
+* Note web app runs on port 8080 by default and only supports `GET` requests to make BACnet preseventValue reads, writes, and releases. A `GET` request on the base URL will return server time in UTC ISO format. Examples below the base URL is `127.0.0.1` but just replace this with whatever the IP address is of your machine that you are running this app on.
 
+# Optional args to define port number to run app on:
+```
+# example to run the web app on port 5000
+$ python3 main.py -port 5000
+```
+
+# Optional args to use Basic Auth on rest endpoints
+```
+# default basic auth username is admin
+# default basic auth password is bacnet
+$ python3 main.py -use_basic_auth True
+```
 
 # Example `GET` HTTP requests to the restapi app for a "read" of BACnet present value:
 * [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#read-examples) for read requests to understand what runs under the hood in the web app
 * Note, for MSTP network devices use syntax like "12345:2" to represent BACnet hardware address 2 on MSTP network 12345
 
- In the browser this will look like: `http://127.0.0.1:8080/read 10.200.200.27 binaryOutput 3`
+ In the browser this will look like: `http://127.0.0.1:8080/bacnet/read 10.200.200.27 binaryOutput 3`
 
 This would be read the BACnet present value of binary output 3 on device 10.200.200.27 and return JSON `"active"` or `"inactive"` because its a binary output or Boolean type of point. Boolean objects are strings in BAC0 as "active" or "inactive" where in this example the cooling compressors on the rooftop HVAC have a status of either "active" or "inactive."
 
@@ -60,7 +72,7 @@ This would be read the BACnet present value of binary output 3 on device 10.200.
 # Example `GET` HTTP requests to the restapi app for a "write" of BACnet present value:
 * [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#write-to-property) for write requests but note this web app only permits `presentValue` operations
 
-In the browser this will look like: `http://127.0.0.1:8080/write 10.200.200.27 binaryOutput 3 active 12`
+In the browser this will look like: `http://127.0.0.1:8080/bacnet/write 10.200.200.27 binaryOutput 3 active 12`
 
 This would be write the BACnet present value of binary output 3 on device 10.200.200.27 to "active" on BACnet prority 12.
 
@@ -68,7 +80,7 @@ This would be write the BACnet present value of binary output 3 on device 10.200
 # Example `GET` HTTP requests to the restapi app for a "release" of BACnet present value:
 * This uses the BAC0 write syntax but minus a value to "write," for example in the browser:
 
-In the browser this will look like: `http://127.0.0.1:8080/release 10.200.200.27 binaryOutput 3 12`
+In the browser this will look like: `http://127.0.0.1:8080/bacnet/release 10.200.200.27 binaryOutput 3 12`
 
 This would be release the BACnet present value of binary output 3 on device 10.200.200.27 on BACnet priority 12. Under the hood in the web app `null` in BAC0 represent release but incorporating a `null` value is handled by the web app.
 

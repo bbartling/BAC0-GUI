@@ -7,6 +7,7 @@ This is a RESTful interface made with Python web stacks and Python BACnet stacks
 
 - .gitignore
 - main.py
+- models.py
 - README.md
 - requirements.txt
 - runtime.txt

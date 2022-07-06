@@ -1,4 +1,4 @@
 aiohttp
-aiohttp-pydantic
-aiohttp-basicauth
 BAC0
+pydantic
+aiohttp-basicauth

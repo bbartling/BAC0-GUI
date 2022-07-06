@@ -60,6 +60,12 @@ $ python3 main.py -port 5000
 $ python3 main.py -use_basic_auth True
 ```
 
+# Optional args to use Basic Auth on rest endpoints and specify username/password
+```
+# run app with basic auth username hulk and basic auth password smash
+$ python3 main.py -use_basic_auth True -auth_user hulk -auth_pass smash
+```
+
 # Example `GET` HTTP requests to the restapi app for a "read" of BACnet present value:
 * [See BAC0 syntax](https://bac0.readthedocs.io/en/latest/read.html#read-examples) for read requests to understand what runs under the hood in the web app
 * Note, for MSTP network devices use syntax like "12345:2" to represent BACnet hardware address 2 on MSTP network 12345

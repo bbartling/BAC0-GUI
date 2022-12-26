@@ -56,6 +56,7 @@ returns serialized object of the BACnet present value for the point requested:
 }
 ```
 ## Example BACnet WRITE request with a POST to `localhost:5000/bacnet/write` with JSON in the body:
+* Note: Boolean objects are handled by BAC0 as strings `active` or `inactive`
 ```json
 {
 "address":"12345:2",
@@ -85,15 +86,13 @@ returns serialized object of the BACnet present value for the point requested:
 returns serialized object of the BACnet present value for the point requested:
 ```json
 {
-"address":"12345:2",
-"object_type":"analogValue",
-"object_instance":"302",
-"priority":"11"
+"point": "12345:2 analogValue 302 presentValue null - 11",
+"status": "success"
 }
 ```
 
 
-# Feel free to submit a git issue or discussion for help getting started or to request a new feature!
+* Feel free to submit a git issue or discussion for help getting started or to request a new feature!
 
 
 ## Author

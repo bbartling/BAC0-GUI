@@ -1,52 +1,52 @@
-from typing import Any, AsyncIterator, Awaitable, Callable, Dict
-from pydantic import BaseModel
+from pydantic import BaseModel, PydanticValueError, ValidationError, validator
+from typing import Literal,Optional
 
 
 
-# Use pydantic BaseModel to validate request body
-class ReadSingleModel(BaseModel):
+
+ACTION_TYPE_MAPPING = Literal["read", "write", "release"]
+
+PRIORITY_MAPPING = Literal["1", "2", "3","4",
+                           "5", "6", "7", "8",
+                           "9", "10", "11", "12",
+                           "13", "14", "15", "16"
+                           ]
+
+OBJECT_TYPE_MAPPING = Literal["multiStateValue", "multiStateInput", "multiStateOutput",
+                       "analogValue", "analogInput", "analogOutput",
+                       "binaryValue", "binaryInput", "binaryOutput"]
+
+BOOLEAN_ACTION_MAPPING = Literal["active", "inactive"]
+
+
+class ReadRequestModel(BaseModel):
     address: str
-    object_type: str
-    object_instance: str
+    object_type: OBJECT_TYPE_MAPPING
+    object_instance: int
 
 
-class WriteSingleModel(BaseModel):
+class WriteRequestModel(BaseModel):
     address: str
-    object_type: str
-    object_instance: str
-    value: str
-    priority: str
+    object_type: OBJECT_TYPE_MAPPING
+    object_instance: int
+    priority: PRIORITY_MAPPING
+
+
+class ReleaseRequestModel(BaseModel):
+    address: str
+    object_type: OBJECT_TYPE_MAPPING
+    object_instance: int
+    priority: PRIORITY_MAPPING
 
     
-class ReleaseSingleModel(BaseModel):
-    address: str
-    object_type: str
-    object_instance: str
-    priority: str
-    
-    
-class ReadMultModel(BaseModel):
-    devices: Dict[str, ReadSingleModel]
 
-
-class WriteMultModel(BaseModel):
-    devices: Dict[str, WriteSingleModel]
-
-
-class ReleaseMultModel(BaseModel):
-    devices: Dict[str, ReleaseSingleModel]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class ValueModel(BaseModel):
+    multiStateValue: Optional[int]
+    multiStateInput: Optional[int]
+    multiStateOutput: Optional[int]
+    analogValue: Optional[int]
+    analogInput: Optional[int]
+    analogOutput: Optional[int]
+    binaryValue: Optional[BOOLEAN_ACTION_MAPPING]
+    binaryInput: Optional[BOOLEAN_ACTION_MAPPING]
+    binaryOutput: Optional[BOOLEAN_ACTION_MAPPING]

@@ -50,4 +50,3 @@ class ValueModel(BaseModel):
     binaryValue: Optional[BOOLEAN_ACTION_MAPPING]
     binaryInput: Optional[BOOLEAN_ACTION_MAPPING]
     binaryOutput: Optional[BOOLEAN_ACTION_MAPPING]
-

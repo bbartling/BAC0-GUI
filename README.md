@@ -40,7 +40,7 @@ $ python app.py
 
 ## Example BACnet READ request with a POST to `localhost:5000/bacnet/read` with JSON in the body:
 
-read single to MSTP device address 2 on network 12345:
+* Note: read sensor value of MSTP device address 2 on network 12345:
 ```json
 {
 "address":"12345:2",
@@ -56,7 +56,7 @@ returns serialized object of the BACnet present value for the point requested:
 }
 ```
 ## Example BACnet WRITE request with a POST to `localhost:5000/bacnet/write` with JSON in the body:
-* Note: Boolean objects are handled by BAC0 as strings `active` or `inactive`
+* Note: Boolean objects are handled by BAC0 as strings `active` or `inactive` for `value` objects
 ```json
 {
 "address":"12345:2",
@@ -74,6 +74,7 @@ returns serialized object of the BACnet present value for the point requested:
 }
 ```
 ## Example BACnet RELEASE request with a POST to `localhost:5000/bacnet/release` with JSON in the body:
+* Note: this statement would release analogValue 302 on BACnet priority 11
 ```json
 {
 "address":"12345:2",
@@ -105,8 +106,4 @@ returns serialized object of the BACnet present value for the point requested:
 
 Copyright 2022 Ben Bartling
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

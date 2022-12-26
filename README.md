@@ -48,12 +48,13 @@ read single to MSTP device address 2 on network 12345:
 "object_instance":"2"
 }
 ```
-returns in JSON the BACnet present value of the object requested:
+returns serialized object of the BACnet present value for the point requested:
+```json
 {
 "pv": 62.75,
 "status": "success"
 }
-
+```
 ## Example BACnet WRITE request with a POST to `localhost:5000/bacnet/write` with JSON in the body:
 ```json
 {
@@ -64,7 +65,7 @@ returns in JSON the BACnet present value of the object requested:
 "priority":"11"
 }
 ```
-returns in JSON the BACnet present value of the object requested:
+returns serialized object of the BACnet present value for the point requested:
 ```json
 {
 "point": "12345:2 analogValue 302 presentValue 55 - 11",
@@ -81,6 +82,17 @@ returns in JSON the BACnet present value of the object requested:
 }
 ```
 
+returns serialized object of the BACnet present value for the point requested:
+```json
+{
+"address":"12345:2",
+"object_type":"analogValue",
+"object_instance":"302",
+"priority":"11"
+}
+```
+
+
 # Feel free to submit a git issue or discussion for help getting started or to request a new feature!
 
 
@@ -92,7 +104,7 @@ returns in JSON the BACnet present value of the object requested:
 
 【MIT License】
 
-Copyright 2021 Ben Bartling
+Copyright 2022 Ben Bartling
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div id="app">
+    <label for="">Click To Release BACnet Overrides Applied By This App</label>
+    <div class="mt-5">
+        <div class="card mb-3" v-for="request, index in requests" :key="index">
+            <div class="card-body row justify-content-between px-4">
+                { request.title }
+                <button type="submit" class="btn-close" @click="deleteRequest(request)"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

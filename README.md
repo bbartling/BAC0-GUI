@@ -96,6 +96,16 @@ returns serialized object of the BACnet present value for the point requested:
 * Feel free to submit a git issue or discussion for help getting started or to request a new feature!
 
 
+## Optional Args when starting the app `$ python app.py`:
+* Modify web app port number with `-port`
+* Lockout webapp outside access on rest endpoints and dashboard with `--use-localhost`
+* Create a BACnet release dashbard with `--use-dashboard`
+
+## BACnet release dashbard
+The BACnet release dashboard is a new feature (12/28/2022) that is a simple html render to give a building operator the ability to release overrides implemented through this app created from external rest API BACnet write requests. The idea is for IoT or other optimization algorithm running on the edge to interact with the buildings BACnet system through this app and if overrides are causing occupant comfort issues or other unwanted hazards a simple web dashboard is available to release BACnet overrides. More inhancements to come, stay tuned...
+
+![iot_res](/images/release_dashboard.PNG)
+
 ## Author
 
 [linkedin](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)

@@ -81,10 +81,12 @@ def make_flask_app(USE_DASHBOARD):
 
     app = Flask(__name__)
 
-    setup_db(app)
-    db_drop_and_create_all(app)
+
 
     if USE_DASHBOARD:
+        setup_db(app)
+        db_drop_and_create_all(app)
+    
         @app.route('/')
         def index():
             BacnetOverridess = BacnetOverrides.query.all()
@@ -138,7 +140,8 @@ def make_flask_app(USE_DASHBOARD):
             write_str = f"{r['address']} {r['object_type']} {r['object_instance']} presentValue {r['value']} - {r['priority']}"
             print("Excecuting write str:", write_str)
             bacnet.write(write_str)
-            add_override_to_db(write_str) # add to sqlite db for dashboard
+            if USE_DASHBOARD:
+                add_override_to_db(write_str) # add to sqlite db for dashboard
             return jsonify({"status" : "success", "point": write_str})
         except Exception as e:
             return jsonify({"status" : "error", 
@@ -156,7 +159,8 @@ def make_flask_app(USE_DASHBOARD):
             release_str = f"{r['address']} {r['object_type']} {r['object_instance']} presentValue null - {r['priority']}"
             print("Excecuting release str:", release_str)
             bacnet.write(release_str)
-            delete_BacnetOverrides(release_str,r['id']) # remove from sqlite db for dashboard
+            if USE_DASHBOARD:
+                delete_BacnetOverrides(release_str,r['id']) # remove from sqlite db for dashboard
             return jsonify({"status" : "success", "point": release_str})
         except Exception as e:
             return jsonify({"status" : "error", 

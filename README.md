@@ -108,7 +108,7 @@ The BACnet release dashboard is a new feature (12/28/2022) that is a simple html
 
 ## Author
 
-[linkedin](https://www.linkedin.com/in/ben-bartling-cem-cmvp-510a0961/)
+[linkedin](https://www.linkedin.com/in/ben-bartling-510a0961/)
 
 ## Licence
 

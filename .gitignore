@@ -8,8 +8,16 @@ __pycache__/
 
 *.sqlite
 
-# rust stuff
-/rust_wasm_python_experiment/target
+# PyInstaller
+__pycache__/
+dist/
+build/
+*.spec
+*.exe
+*.spec
+*.zip
+*.log
+
 
 **/config.yaml
 

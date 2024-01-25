@@ -1,5 +1,0 @@
-BAC0
-flask-sqlalchemy
-flask
-WTForms
-

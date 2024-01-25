@@ -1,21 +1,34 @@
 # BAC0-GUI
 
-This is a Python based GUI for a BACnet scan tool inspired by [YABE](https://sourceforge.net/projects/yetanotherbacnetexplorer/) which runs BAC0 under the hood. See the official [BAC0 documention](https://bac0.readthedocs.io/en/latest/):
-
+This is a Python based GUI meant to run on Windows for a BACnet scan tool inspired by [YABE](https://sourceforge.net/projects/yetanotherbacnetexplorer/). 
+BACnet under the hood runs BAC0, see the official [BAC0 documention](https://bac0.readthedocs.io/en/latest/) for more information.
 
 ## Setup
+I am working with a version of Python 3.10
+
 ```bash
-pip install tkinter BAC0
+py -m pip install tkinter BAC0
 ```
 
 ## Run App
 ```bash
-python app.py
+py app.py
 ```
 
 ## Example
 ![Alt Text](example_snip.JPG)
 
+
+## Optional - .exe file creation (work in progress)
+Install pyinstaller 
+
+```bash
+py -m pip install pyinstaller 
+```
+Make .exe file with pyinstaller 
+```
+pyinstaller --onefile app.py
+```
 
 ## Author
 

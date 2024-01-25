@@ -1,9 +1,7 @@
 # BAC0-GUI
 
-A YABE inspired GUI APP for BAC0
+This is a Python based GUI for a BACnet scan tool inspired by [YABE](https://sourceforge.net/projects/yetanotherbacnetexplorer/) which runs BAC0 under the hood. See the official [BAC0 documention](https://bac0.readthedocs.io/en/latest/):
 
-See BAC0 documention for what is going under the hood of the Flask App:
-https://bac0.readthedocs.io/en/latest/
 
 ## Setup
 ```bash
